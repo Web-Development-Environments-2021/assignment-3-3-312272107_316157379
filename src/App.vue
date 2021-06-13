@@ -6,6 +6,7 @@
         <b-navbar-nav>
 
         <b-nav-item :to="{ name: 'search' }">Search</b-nav-item>
+        <b-nav-item disabled>hello {{usernameDisplay}}</b-nav-item>
         </b-navbar-nav>
         <b-navbar-nav class="ml-auto" v-if="!$root.store.username">
           <b-nav-item :to="{ name: 'login' }">Login</b-nav-item>
@@ -17,7 +18,7 @@
             User
           </template>
           <b-dropdown-item href="#">Favorites</b-dropdown-item>
-          <b-dropdown-item href="#">Log Out</b-dropdown-item>
+          <b-dropdown-item @click="Logout">Log Out</b-dropdown-item>
         </b-nav-item-dropdown>
         </b-navbar-nav>
       </b-collapse>
@@ -32,12 +33,21 @@ export default {
   methods: {
     Logout() {
       this.$root.store.logout();
+      // if (this.$root.store.username)
       this.$root.toast("Logout", "User logged out successfully", "success");
 
       this.$router.push("/").catch(() => {
         this.$forceUpdate();
       });
     }
+  },
+  computed:{
+     usernameDisplay(){  
+        if (this.$root.store.username){
+          return this.$root.store.username;
+        }
+        return 'guest';
+      },
   }
 };
 </script>

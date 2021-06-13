@@ -16,7 +16,7 @@ export default {
     LeagueInfo, 
     LoginPage, 
     FavoriteGames
-  }
+  },
 };
 </script>
 
