@@ -52,7 +52,6 @@
       class="mt-2"
       v-if="form.submitError"
       variant="warning"
-      dismissible
       show
     >
       Login failed: {{ form.submitError }}
@@ -94,7 +93,7 @@ export default {
     async Login() {
       try {
         const response = await this.axios.post(
-          "https://localhost:3000/user/Login",
+           `${this.axios.defaults.baseURL}/login`,
           {
             username: this.form.username,
             password: this.form.password
@@ -102,12 +101,11 @@ export default {
         );
         // console.log(response);
         // this.$root.loggedIn = true;
-        console.log(this.$root.store.login);
         this.$root.store.login(this.form.username);
         this.$router.push("/");
       } catch (err) {
-        console.log(err.response);
-        this.form.submitError = err.response.data.message;
+        // console.log(err.message);
+        this.form.submitError =  err.message;
       }
     },
     onLogin() {

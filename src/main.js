@@ -3,6 +3,10 @@ import App from "./App.vue";
 import VueAxios from "vue-axios";
 import axios from "axios";
 
+axios.defaults.withCredentials = true;
+axios.defaults.baseURL = 'http://localhost:3000';
+
+
 import routes from "./routes";
 import VueRouter from "vue-router";
 Vue.use(VueRouter);
@@ -44,6 +48,7 @@ Vue.use(Vuelidate);
 axios.interceptors.request.use(
   function(config) {
     // Do something before request is sent
+    
     return config;
   },
   function(error) {
@@ -71,7 +76,7 @@ Vue.config.productionTip = false;
 const shared_data = {
   // username: localStorage.username,
   username: "",
-  backend_server_prefix: 'http://localhost:3000',
+  // backend_server_prefix: 'http://localhost:3000',
   login(username) {
     localStorage.setItem("username", username);
     this.username = username;

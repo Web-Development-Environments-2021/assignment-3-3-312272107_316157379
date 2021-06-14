@@ -160,7 +160,6 @@
       class="mt-2"
       v-if="form.submitError"
       variant="warning"
-      dismissible
       show
     >
       Register failed: {{ form.submitError }}
@@ -247,7 +246,7 @@ export default {
       try {
         // unique username is verified server-side
         const response = await this.axios.post(
-          `${this.$root.store.backend_server_prefix}/register`,
+          `${this.axios.defaults.baseURL}/register`,
           {
             username: this.form.username,
             password: this.form.password,
@@ -260,12 +259,12 @@ export default {
         this.$router.push("/login");
         // console.log(response);
       } catch (err) {
-        console.log(err.response);
-        this.form.submitError = err.response.data.message;
+        console.log(err.message);
+        this.form.submitError = err.message;
       }
     },
     onRegister() {
-      // console.log("register method called");
+      // this.form.submitError = undefined;
       this.$v.form.$touch();
       if (this.$v.form.$anyError) {
         return;
