@@ -91,9 +91,11 @@ const shared_data = {
       this.username = '';
   },
   inLocalStorage(storageParam){
-      const param =  localStorage.getItem(storageParam);
-      return param == null;
-  }
+      return localStorage.getItem(storageParam);
+  },
+  isObjectEmpty(obj) {
+    return obj && Object.keys(obj).length === 0 && obj.constructor === Object;
+  },
 }
 // Vue.prototype.$root.store = shared_data;
 

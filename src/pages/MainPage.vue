@@ -3,11 +3,11 @@
     <b-container class="bv-example-row">
       <b-row>
         <b-col>
-          <LeagueInfo></LeagueInfo>
+          <league-info></league-info>
         </b-col>
         <b-col>
-          <LoginPage v-if="!$root.store.username"></LoginPage>
-          <FavoriteGames v-else></FavoriteGames>
+          <login-page v-if="!$root.store.username"></login-page>
+          <favorite-matches v-else></favorite-matches>
         </b-col>
       </b-row>
     </b-container>
@@ -16,13 +16,13 @@
 
 <script>
 import LeagueInfo from "../components/LeagueInfo";
-import FavoriteGames from "../components/FavoriteGames";
+import FavoriteMatches from "../components/FavoriteMatches.vue";
 import LoginPage from "../pages/LoginPage";
 export default {
   components: {
-    LeagueInfo,
-    LoginPage,
-    FavoriteGames,
+    'league-info': LeagueInfo,
+    'login-page': LoginPage,
+    'favorite-matches':  FavoriteMatches,
   },
 };
 </script>

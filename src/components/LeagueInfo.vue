@@ -3,17 +3,26 @@
     <b-card style="max-width: 20rem;">
       <b-list-group>
         <b-card-title>League Details</b-card-title>
-        <b-list-group-item v-for="(value,key,index) in league_details" v-bind:key=index >{{ value }}</b-list-group-item>
+        <b-list-group-item
+          v-for="(value, key, index) in league_details"
+          v-bind:key="index"
+          >{{ value }}</b-list-group-item
+        >
       </b-list-group>
-      <b-card-body>
-          <game-preview v-if="!isObjectEmpty(nextMatch)" :homeTeam=nextMatch.home_team  :awayTeam=nextMatch.away_team :date_time=nextMatch.match_date_time></game-preview>
+      <b-card-body title="Next Match">
+        <match-preview
+          v-if="!isObjectEmpty(nextMatch)"
+          :homeTeam="nextMatch.home_team"
+          :awayTeam="nextMatch.away_team"
+          :date_time="nextMatch.match_date_time"
+        ></match-preview>
       </b-card-body>
     </b-card>
   </div>
 </template>
 
 <script>
-import GamePreview from "./GamePreview.vue";
+import MatchPreview from "./MatchPreview.vue";
 export default {
   data() {
     return {
@@ -22,18 +31,21 @@ export default {
         season: "",
         stage: "",
       },
-      nextMatch: {}
+      nextMatch: {},
     };
   },
   components: {
-    'game-preview': GamePreview
-  }, 
+    "match-preview": MatchPreview,
+  },
   methods: {
     async getLeagueDetails() {
       try {
-        if (this.$root.store.inLocalStorage("leagueDetails")) {
+        let league_details = JSON.parse(
+          this.$root.store.inLocalStorage("leagueDetails")
+        );
+        if (league_details == null) {
           //first time retrieving league details
-          const league_details = await this.axios.get(
+          league_details = await this.axios.get(
             `${this.axios.defaults.baseURL}/league/details`
           );
           this.league_details.league = league_details.data.league_name;
@@ -41,24 +53,25 @@ export default {
           this.league_details.stage = league_details.data.current_stage_name;
           this.nextMatch = league_details.data.next_match_details;
 
-          localStorage.setItem("leagueDetails", JSON.stringify(this.league_details));
+          localStorage.setItem(
+            "leagueDetails",
+            JSON.stringify(this.league_details)
+          );
           localStorage.setItem("nextMatch", JSON.stringify(this.nextMatch));
         } else {
-          this.league_details = JSON.parse(localStorage.getItem('leagueDetails'));
+          this.league_details = league_details;
           this.nextMatch = JSON.parse(localStorage.getItem("nextMatch"));
           // localStorage.removeItem("nextMatch");
           // localStorage.removeItem("leagueDetails");
-          
         }
       } catch (err) {
         // this.form.submitError = err.message;
         // TODO what to do here?
       }
     },
-    isObjectEmpty(obj){
-      return obj && Object.keys(obj).length === 0 && obj.constructor === Object
+    isObjectEmpty(obj) {
+      return this.$root.store.isObjectEmpty(obj);
     },
-
   },
   mounted() {
     this.getLeagueDetails();
