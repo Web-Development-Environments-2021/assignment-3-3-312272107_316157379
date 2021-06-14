@@ -30,6 +30,7 @@ import {
   LayoutPlugin, 
   InputGroupPlugin,
   JumbotronPlugin,
+  ListGroupPlugin ,
 } from "bootstrap-vue";
 [
   FormGroupPlugin,
@@ -44,6 +45,7 @@ import {
   LayoutPlugin, 
   InputGroupPlugin,
   JumbotronPlugin,
+  ListGroupPlugin
 ].forEach((x) => Vue.use(x));
 Vue.use(Vuelidate);
 
@@ -78,17 +80,21 @@ Vue.config.productionTip = false;
 const shared_data = {
   // username: localStorage.username,
   username: "",
+  leagueID: 271 , //Superliga
   // backend_server_prefix: 'http://localhost:3000',
   login(username) {
     localStorage.setItem("username", username);
     this.username = username;
-    console.log("login", this.username);
   },
   logout() {
       localStorage.removeItem("username");
       this.username = '';
-    }
+  },
+  inLocalStorage(storageParam){
+      const param =  localStorage.getItem(storageParam);
+      return param == null;
   }
+}
 // Vue.prototype.$root.store = shared_data;
 
 new Vue({

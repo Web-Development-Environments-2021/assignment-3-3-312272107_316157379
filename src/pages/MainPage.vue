@@ -1,9 +1,16 @@
 <template>
-  <div class="container">
-    <h1 class="title">Main Page</h1>
-    <LoginPage v-if="!$root.store.username"></LoginPage>
-    <FavoriteGames v-else></FavoriteGames>
-    <LeagueInfo></LeagueInfo>
+  <div>
+    <b-container class="bv-example-row">
+      <b-row>
+        <b-col>
+          <LeagueInfo></LeagueInfo>
+        </b-col>
+        <b-col>
+          <LoginPage v-if="!$root.store.username"></LoginPage>
+          <FavoriteGames v-else></FavoriteGames>
+        </b-col>
+      </b-row>
+    </b-container>
   </div>
 </template>
 
@@ -13,9 +20,9 @@ import FavoriteGames from "../components/FavoriteGames";
 import LoginPage from "../pages/LoginPage";
 export default {
   components: {
-    LeagueInfo, 
-    LoginPage, 
-    FavoriteGames
+    LeagueInfo,
+    LoginPage,
+    FavoriteGames,
   },
 };
 </script>

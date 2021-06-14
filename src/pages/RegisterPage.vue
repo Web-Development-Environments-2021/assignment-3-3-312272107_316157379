@@ -143,6 +143,20 @@
         </b-form-invalid-feedback>
       </b-form-group>
 
+      <b-form-group
+        id="input-group-profile-pic"
+        label-cols-sm="3"
+        label="Profile Picture:"
+        label-for="profile_pic"
+      >
+        <b-form-input
+          id="profile_pic"
+          type="text"
+          v-model="$v.form.profile_pic.$model"
+          :state="validateState('profile_pic')"
+        ></b-form-input>
+      </b-form-group>
+
       <b-button type="reset" variant="danger">Reset</b-button>
       <b-button
         type="submit"
@@ -156,12 +170,7 @@
         <router-link to="login"> Log in here</router-link>
       </div>
     </b-form>
-    <b-alert
-      class="mt-2"
-      v-if="form.submitError"
-      variant="warning"
-      show
-    >
+    <b-alert class="mt-2" v-if="form.submitError" variant="warning" show>
       Register failed: {{ form.submitError }}
     </b-alert>
     <!-- <b-card class="mt-3 md-3" header="Form Data Result">
@@ -180,6 +189,7 @@ import {
   alpha,
   sameAs,
   email,
+  url,
 } from "vuelidate/lib/validators";
 
 export default {
@@ -194,6 +204,7 @@ export default {
         password: "",
         confirmedPassword: "",
         email: "",
+        profile_pic: "",
         submitError: undefined,
       },
       countries: [{ value: null, text: "", disabled: true }],
@@ -229,7 +240,12 @@ export default {
       email: {
         required,
         email,
+        
       },
+      profile_pic: {
+        url,
+      },
+      
     },
   },
   mounted() {
@@ -254,6 +270,7 @@ export default {
             last_name: this.form.lastName,
             email: this.form.email,
             country: this.form.country,
+            profile_pic: this.form.profile_pic,
           }
         );
         this.$router.push("/login");
@@ -282,6 +299,7 @@ export default {
         password: "",
         confirmedPassword: "",
         email: "",
+        profile_pic: ""
       };
       this.$nextTick(() => {
         this.$v.$reset();

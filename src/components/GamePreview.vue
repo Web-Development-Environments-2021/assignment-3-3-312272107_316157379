@@ -1,14 +1,17 @@
 <template>
-  <div class="game-preview">
-    <div :title="id" class="game-title">
-      <b>Game Id:</b> {{ id }}
-    </div>
-    <ul class="game-content">
-      <li> host: {{ hostTeam }}</li>
-      <li> guest: {{ guestTeam }}</li>
-      <li> date: {{ date }}</li>
-      <li> time: {{ hour }}</li>
-    </ul>
+  <div>
+    <b-card style="max-width: 20rem;">
+      <b-list-group flush>
+        <b-card-title>Match Details</b-card-title>
+        <b-list-group-item>Home Team: {{ homeTeam }}</b-list-group-item>
+        <b-list-group-item>Away Team: {{ awayTeam }}</b-list-group-item>
+        <b-list-group-item>Match Date: {{ date }}</b-list-group-item>
+        <b-list-group-item>Match Time: {{ time }}</b-list-group-item>
+      </b-list-group>
+      <b-card-body>
+        <b-list-group flush> </b-list-group>
+      </b-card-body>
+    </b-card>
   </div>
 </template>
 
@@ -16,30 +19,38 @@
 export default {
   name: "GamePreview",
   props: {
-      id: {
-        type: Number,
-        required: true
+    homeTeam: {
+      type: String,
+      required: true,
+    },
+    awayTeam: {
+      type: String,
+      required: true,
+    },
+    date_time: {
+      type: String,
+      required: true,
+    },
+  },
+  data() {
+    return {
+      date: "",
+      time: "",
+    };
+  },
+  watch: {
+    date_time: {
+      immediate: true,
+      handler() {
+        let date_time_split = this.date_time.split("T");
+        this.date = date_time_split[0];
+        this.time = date_time_split[1].substring(
+          0,
+          8
+        );
       },
-      hostTeam: {
-        type: String,
-        required: true
-      },
-      guestTeam: {
-        type: String,
-        required: true
-      },
-      date: {
-        type: String,
-        required: true
-      },
-      hour: {
-        type: String,
-        required: true
-      }
-  }, 
-  mounted(){
-    console.log("game preview mounted")
-  } 
+    },
+  },
 };
 </script>
 
@@ -53,20 +64,17 @@ export default {
   border-style: solid;
   border-radius: 10px;
   border-width: 5px;
-  border-color:cadetblue;
+  border-color: cadetblue;
 }
 
 .game-preview .game-title {
   text-align: center;
   text-transform: uppercase;
-  color:  rgb(111, 197, 157);
+  color: rgb(111, 197, 157);
 }
 
 .game-preview .game-content {
   width: 100%;
   overflow: hidden;
 }
-
-
-
 </style>
