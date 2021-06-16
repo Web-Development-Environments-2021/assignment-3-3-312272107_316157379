@@ -9,7 +9,7 @@
         <b-nav-item :to="{ name: 'search' }">Search</b-nav-item>
         <b-nav-item disabled>hello {{usernameDisplay}}</b-nav-item>
         </b-navbar-nav>
-        <b-navbar-nav class="ml-auto" v-if="!$root.store.username">
+        <b-navbar-nav class="ml-auto" v-if="!$store.username">
           <b-nav-item :to="{ name: 'login' }">Login</b-nav-item>
           <b-nav-item :to="{ name: 'register' }">Register</b-nav-item>
         </b-navbar-nav>
@@ -33,9 +33,8 @@ export default {
   name: "App",
   methods: {
     Logout() {
-      this.$root.store.logout();
-      // if (this.$root.store.username)
-      this.$root.toast("Logout", "User logged out successfully", "success");
+      this.$store.actions.logout();
+      this.$store.actions.toast("Logout", "User logged out successfully", "success");
 
       this.$router.push("/").catch(() => {
         this.$forceUpdate();
@@ -44,10 +43,7 @@ export default {
   },
   computed:{
      usernameDisplay(){  
-        if (this.$root.store.username){
-          return this.$root.store.username;
-        }
-        return 'guest';
+       return this.$store.state.username ? this.$store.state.username : 'guest'; 
       },
   }
 };

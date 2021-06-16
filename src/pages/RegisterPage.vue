@@ -249,9 +249,7 @@ export default {
     },
   },
   mounted() {
-    // console.log("mounted");
     this.countries.push(...countries);
-    // console.log($v);
   },
   methods: {
     validateState(param) {
@@ -274,7 +272,6 @@ export default {
           }
         );
         this.$router.push("/login");
-        // console.log(response);
       } catch (err) {
         console.log(err.message);
         this.form.submitError = err.message;

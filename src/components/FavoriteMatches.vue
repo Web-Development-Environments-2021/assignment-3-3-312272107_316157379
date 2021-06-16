@@ -39,20 +39,13 @@ export default {
   methods: {
     async updateMatches() {
       try {
-        let favorite_matches = JSON.parse(
-          this.$root.store.inLocalStorage("favoriteMatches")
-        );
-        if (favorite_matches == null) {
-          favorite_matches = await this.axios
+        if (this.$store.actions.hasProperty("favoriteMatches")) {
+          let favorite_matches = await this.axios
             .get(`${this.axios.defaults.baseURL}/users/favorites/match`)
             .then((favorite_matches) => favorite_matches.data);
           this.three_favorite_matches = favorite_matches.slice(0, 3);
-          localStorage.setItem(
-            "favoriteMatches",
-            JSON.stringify(favorite_matches)
-          ); //more than three
+          this.$store.actions.setProperty("favoriteMatches");
         } else {
-          // localStorage.removeItem('favoriteMatches');
           this.three_favorite_matches = favorite_matches.slice(0, 3);
         }
       } catch (error) {

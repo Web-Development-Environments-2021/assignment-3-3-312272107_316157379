@@ -40,12 +40,9 @@ export default {
   methods: {
     async getLeagueDetails() {
       try {
-        let league_details = JSON.parse(
-          this.$root.store.inLocalStorage("leagueDetails")
-        );
-        if (league_details == null) {
+        if (!this.$store.actions.hasProperty("leagueDetails")) {
           //first time retrieving league details
-          league_details = await this.axios.get(
+          let league_details = await this.axios.get(
             `${this.axios.defaults.baseURL}/league/details`
           );
           this.league_details.league = league_details.data.league_name;
@@ -53,24 +50,18 @@ export default {
           this.league_details.stage = league_details.data.current_stage_name;
           this.nextMatch = league_details.data.next_match_details;
 
-          localStorage.setItem(
-            "leagueDetails",
-            JSON.stringify(this.league_details)
-          );
-          localStorage.setItem("nextMatch", JSON.stringify(this.nextMatch));
+          this.$store.actions.setProperty("leagueDetails",this.league_details);
+          this.$store.actions.setProperty("nextMatch",this.nextMatch);
         } else {
-          this.league_details = league_details;
-          this.nextMatch = JSON.parse(localStorage.getItem("nextMatch"));
-          // localStorage.removeItem("nextMatch");
-          // localStorage.removeItem("leagueDetails");
+          this.league_details = this.$store.state.league_details;
+          this.nextMatch = this.$store.state.nextMatch;
         }
       } catch (err) {
-        // this.form.submitError = err.message;
-        // TODO what to do here?
+        console.log(err);
       }
     },
     isObjectEmpty(obj) {
-      return this.$root.store.isObjectEmpty(obj);
+      return this.$store.actions.isObjectEmpty(obj);
     },
   },
   mounted() {

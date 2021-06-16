@@ -99,12 +99,11 @@ export default {
             password: this.form.password
           }
         );
-        // console.log(response);
-        // this.$root.loggedIn = true;
-        this.$root.store.login(this.form.username);
+        console.log(this.$store);
+         this.$store.actions.login(this.form.username);
         this.$router.push("/").catch(() => {});
       } catch (err) {
-        // console.log(err.message);
+        console.log(err);
         this.form.submitError =  err.message;
       }
     },

@@ -49,6 +49,13 @@ import {
 ].forEach((x) => Vue.use(x));
 Vue.use(Vuelidate);
 
+import {state as store_state, actions as store_actions} from './store';
+let state = Vue.observable(store_state);
+let actions = Vue.observable(store_actions);
+let store = {state: state, actions: actions};
+Vue.prototype.$store = store;
+
+
 axios.interceptors.request.use(
   function(config) {
     // Do something before request is sent
@@ -77,35 +84,9 @@ Vue.use(VueAxios, axios);
 
 Vue.config.productionTip = false;
 
-const shared_data = {
-  // username: localStorage.username,
-  username: "",
-  leagueID: 271 , //Superliga
-  // backend_server_prefix: 'http://localhost:3000',
-  login(username) {
-    localStorage.setItem("username", username);
-    this.username = username;
-  },
-  logout() {
-      localStorage.removeItem("username");
-      this.username = '';
-  },
-  inLocalStorage(storageParam){
-      return localStorage.getItem(storageParam);
-  },
-  isObjectEmpty(obj) {
-    return obj && Object.keys(obj).length === 0 && obj.constructor === Object;
-  },
-}
-// Vue.prototype.$root.store = shared_data;
 
 new Vue({
   router,
-  data() {
-    return {
-      store: shared_data
-    };
-  },
   methods: {
     toast(title, content, variant = null, append = false) {
       this.$bvToast.toast(`${content}`, {
@@ -114,9 +95,9 @@ new Vue({
         variant: variant,
         solid: true,
         appendToast: append,
-        autoHideDelay: 3000
+        autoHideDelay: 3000,
       });
-    }
+    },
   },
   render: (h) => h(App)
 }).$mount("#app");

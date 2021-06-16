@@ -6,7 +6,7 @@
           <league-info></league-info>
         </b-col>
         <b-col>
-          <login-page v-if="!$root.store.username"></login-page>
+          <login-page v-if="!$store.state.username"></login-page>
           <favorite-matches v-else></favorite-matches>
         </b-col>
       </b-row>
