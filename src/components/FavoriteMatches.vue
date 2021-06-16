@@ -39,7 +39,7 @@ export default {
   methods: {
     async updateMatches() {
       try {
-        if (this.$store.actions.hasProperty("favoriteMatches")) {
+        if (!this.$store.actions.hasProperty("favoriteMatches")) {
           let favorite_matches = await this.axios
             .get(`${this.axios.defaults.baseURL}/users/favorites/match`)
             .then((favorite_matches) => favorite_matches.data);
