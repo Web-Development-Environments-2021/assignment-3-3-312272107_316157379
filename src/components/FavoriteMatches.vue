@@ -46,7 +46,7 @@ export default {
           this.three_favorite_matches = favorite_matches.slice(0, 3);
           this.$store.actions.setProperty("favoriteMatches");
         } else {
-          this.three_favorite_matches = favorite_matches.slice(0, 3);
+          this.three_favorite_matches = this.$store.state.favorite_matches.slice(0, 3);
         }
       } catch (error) {
         console.log("error in update matches");
