@@ -1,6 +1,7 @@
 <template>
   <div>
     <b-jumbotron
+      v-if="three_favorite_matches.length > 0"
       lead="Your Favorite Matches"
     >
       <match-preview
@@ -11,6 +12,14 @@
         :key="match.match_id"
       >
       </match-preview>
+    </b-jumbotron>
+    <b-jumbotron
+      header="No Favorite Matches To Display"
+      lead="Navigate to favorites matches page to add favorites"
+      v-else
+    >
+      <!-- <b-button variant="primary" href="#">Favorite Matches</b-button> -->
+      <router-link to="/" tag="button">Favorite Matches</router-link>
     </b-jumbotron>
   </div>
 </template>
