@@ -99,9 +99,10 @@ export default {
             password: this.form.password
           }
         );
-        console.log(this.$store);
          this.$store.actions.login(this.form.username);
-        this.$router.push("/").catch(() => {});
+         if(this.$router.currentRoute.fullPath != "/"){
+           this.$router.push("/");
+         }
       } catch (err) {
         console.log(err);
         this.form.submitError =  err.message;

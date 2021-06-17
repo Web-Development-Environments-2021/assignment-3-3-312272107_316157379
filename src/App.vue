@@ -9,16 +9,20 @@
         <b-nav-item :to="{ name: 'search' }">Search</b-nav-item>
         <b-nav-item disabled>hello {{usernameDisplay}}</b-nav-item>
         </b-navbar-nav>
-        <b-navbar-nav class="ml-auto" v-if="!$store.username">
+
+        
+        <b-navbar-nav class="ml-auto" v-if="!$store.state.username">
           <b-nav-item :to="{ name: 'login' }">Login</b-nav-item>
           <b-nav-item :to="{ name: 'register' }">Register</b-nav-item>
         </b-navbar-nav>
         <b-navbar-nav class="ml-auto" v-else>
         <b-nav-item-dropdown right>
           <template #button-content>
-            User
+            {{usernameDisplay}}
           </template>
-          <b-dropdown-item href="#">Favorites</b-dropdown-item>
+          <b-dropdown-item href="#">My Matches</b-dropdown-item>
+          <!-- <b-dropdown-item href="#">Favorite Players</b-dropdown-item> -->
+          <!-- <b-dropdown-item href="#">Favorite Teams</b-dropdown-item> -->
           <b-dropdown-item @click="Logout">Log Out</b-dropdown-item>
         </b-nav-item-dropdown>
         </b-navbar-nav>
@@ -34,7 +38,7 @@ export default {
   methods: {
     Logout() {
       this.$store.actions.logout();
-      this.$store.actions.toast("Logout", "User logged out successfully", "success");
+      this.$root.toast("Logout", "User logged out successfully", "success");
 
       this.$router.push("/").catch(() => {
         this.$forceUpdate();

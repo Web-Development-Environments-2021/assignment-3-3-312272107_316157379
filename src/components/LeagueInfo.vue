@@ -9,20 +9,17 @@
           >{{ value }}</b-list-group-item
         >
       </b-list-group>
-      <b-card-body title="Next Match">
-        <match-preview
-          v-if="!isObjectEmpty(nextMatch)"
-          :homeTeam="nextMatch.home_team"
-          :awayTeam="nextMatch.away_team"
-          :date_time="nextMatch.match_date_time"
-        ></match-preview>
-      </b-card-body>
     </b-card>
+    <span>Next Match</span>
+    <match-preview
+      :matchesToDisplay="[nextMatch]"
+      :enableAddToFavorites="true"
+    ></match-preview>
   </div>
 </template>
 
 <script>
-import MatchPreview from "./MatchPreview.vue";
+import MatchPreview from "./MatchesInTable.vue";
 export default {
   data() {
     return {
@@ -50,22 +47,19 @@ export default {
           this.league_details.stage = league_details.data.current_stage_name;
           this.nextMatch = league_details.data.next_match_details;
 
-          this.$store.actions.setProperty("leagueDetails",this.league_details);
-          this.$store.actions.setProperty("nextMatch",this.nextMatch);
+          this.$store.actions.setProperty("leagueDetails", this.league_details);
+          this.$store.actions.setProperty("nextMatch", this.nextMatch);
         } else {
-          this.league_details = this.$store.state.league_details;
+          this.league_details = this.$store.state.leagueDetails;
           this.nextMatch = this.$store.state.nextMatch;
         }
       } catch (err) {
         console.log(err);
       }
     },
-    isObjectEmpty(obj) {
-      return this.$store.actions.isObjectEmpty(obj);
-    },
   },
-  mounted() {
-    this.getLeagueDetails();
+  async mounted() {
+    await this.getLeagueDetails();
   },
 };
 </script>

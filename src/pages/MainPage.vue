@@ -7,7 +7,11 @@
         </b-col>
         <b-col>
           <login-page v-if="!$store.state.username"></login-page>
-          <favorite-matches v-else></favorite-matches>
+          <favorite-matches
+            v-else
+            :matchesToDisplay="threeFavoriteMatches"
+            :enableAddToFavorites="false"
+          ></favorite-matches>
         </b-col>
       </b-row>
     </b-container>
@@ -16,13 +20,34 @@
 
 <script>
 import LeagueInfo from "../components/LeagueInfo";
-import FavoriteMatches from "../components/FavoriteMatches.vue";
+import FavoriteMatches from "../components/MatchesInTable.vue";
 import LoginPage from "../pages/LoginPage";
 export default {
   components: {
-    'league-info': LeagueInfo,
-    'login-page': LoginPage,
-    'favorite-matches':  FavoriteMatches,
+    "league-info": LeagueInfo,
+    "login-page": LoginPage,
+    "favorite-matches": FavoriteMatches,
+  },
+  data() {
+    return {
+      userLoggedIn: this.$store.state.username,
+      threeFavoriteMatches: []
+    };
+  },
+  watch: {
+    userLoggedIn: {
+      immediate: true,
+      deep: true,
+      handler() {
+        this.getFavoriteMatches();
+        },
+    },
+  },
+  methods: {
+    getFavoriteMatches: async function(){
+      let allFavoriteMatches = await this.$store.actions.updateMatches();
+      this.threeFavoriteMatches = allFavoriteMatches.slice(0, 3);
+    }
   },
 };
 </script>

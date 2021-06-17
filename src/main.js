@@ -31,6 +31,7 @@ import {
   InputGroupPlugin,
   JumbotronPlugin,
   ListGroupPlugin ,
+  TablePlugin,
 } from "bootstrap-vue";
 [
   FormGroupPlugin,
@@ -45,15 +46,11 @@ import {
   LayoutPlugin, 
   InputGroupPlugin,
   JumbotronPlugin,
-  ListGroupPlugin
+  ListGroupPlugin,
+  TablePlugin,
 ].forEach((x) => Vue.use(x));
 Vue.use(Vuelidate);
 
-import {state as store_state, actions as store_actions} from './store';
-let state = Vue.observable(store_state);
-let actions = Vue.observable(store_actions);
-let store = {state: state, actions: actions};
-Vue.prototype.$store = store;
 
 
 axios.interceptors.request.use(
@@ -83,6 +80,12 @@ axios.interceptors.response.use(
 Vue.use(VueAxios, axios);
 
 Vue.config.productionTip = false;
+
+import {state as store_state, actions as store_actions} from './store';
+let state = Vue.observable(store_state);
+let actions = Vue.observable(store_actions);
+let store = {state: state, actions: actions};
+Vue.prototype.$store = store;
 
 
 new Vue({
