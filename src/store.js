@@ -5,6 +5,8 @@ axios.defaults.baseURL = "http://localhost:3000";
 let state = {
   username: "",
   leagueID: 271, //Superliga
+  additionSuccessStatus: 201,
+
 };
 let actions = {
   login: (username) => {
@@ -49,13 +51,14 @@ let actions = {
   },
   async addToFavorites(categoryID, categoryName) {
     try {
-      await this.axios.post(
-        `${this.axios.defaults.baseURL}/users/favorites/${categoryName}`,
+      await axios.post(
+        `${axios.defaults.baseURL}/users/favorites/${categoryName}`,
         {
           favorite_id: categoryID,
         }
-      );
+      )
     } catch (error) {
+      console.log('something went wrong when trying to add to favorites');
       console.log(error);
     }
   },

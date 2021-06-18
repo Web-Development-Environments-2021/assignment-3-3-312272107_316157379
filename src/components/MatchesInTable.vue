@@ -5,7 +5,6 @@
       :items="matchesToDisplayAfterSplit"
       :fields="fields"
       small
-      responsive="sm"
     >
       <!-- hopefully all the other cells just render normally  -->
 
@@ -37,16 +36,20 @@
         <b-button
           :disabled="!matchHasEventLog(data.item)"
           @click="toggleEventLog(data.item.event_log)"
-          size="lg"
-          variant="primary"
+          size="sm"
+          variant="info"
           >{{ displayEventLog ? "Hide" : "Show" }} Event Log</b-button
         >
       </template>
 
-      <template v-if="enableAddToFavorites" #cell(addFavorite)="data">
+      <template #cell(addFavorite)="data">
         <b-button
-          @click="$store.actions.addToFavorites(data.item.match_id, 'match')"
+          :disabled="! enableAddToFavorites"
+          @click="addToFavorites(data.item.match_id, 'match')"
+            size="sm"
+          variant="primary"
         >
+        Add to Favorites
         </b-button>
       </template>
     </b-table>
@@ -150,6 +153,11 @@ export default {
         currentMatch.hasOwnProperty("event_log")
       );
     },
+    async addToFavorites(matchID,matchCategory){
+      await this.$store.actions.addToFavorites(matchID,matchCategory)
+      this.$root.toast("Favorites Update", "Match has been succesfully added to favorites", "success");
+
+    }
   },
 };
 </script>
