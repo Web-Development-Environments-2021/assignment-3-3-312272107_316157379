@@ -6,7 +6,7 @@
           <league-info></league-info>
         </b-col>
         <b-col>
-          <login-page v-if="!$store.state.username"></login-page>
+          <login-page v-if="!$store.state.username" v-on:loginSuccessful="getFavoriteMatches"></login-page>
           <favorite-matches
             v-else
             :matchesToDisplay="threeFavoriteMatches"
@@ -30,26 +30,20 @@ export default {
   },
   data() {
     return {
-      userLoggedIn: this.$store.state.username,
       threeFavoriteMatches: [],
     };
   },
-  watch: {
-    userLoggedIn: {
-      immediate: true,
-      deep: true,
-      handler() {
-        if (this.userLoggedIn) {
-          this.getFavoriteMatches();
-        }
-      },
-    },
-  },
+
   methods: {
-    getFavoriteMatches: async function() {
+    async getFavoriteMatches() {
       let allFavoriteMatches = await this.$store.actions.updateMatches();
       this.threeFavoriteMatches = allFavoriteMatches.slice(0, 3);
     },
+  },
+  created() {
+    if(this.$store.state.username){
+      this.getFavoriteMatches();
+    }
   },
 };
 </script>
