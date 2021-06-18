@@ -154,8 +154,13 @@ export default {
       );
     },
     async addToFavorites(matchID,matchCategory){
-      await this.$store.actions.addToFavorites(matchID,matchCategory)
-      this.$root.toast("Favorites Update", "Match has been succesfully added to favorites", "success");
+      try{
+        await this.$store.actions.addToFavorites(matchID,matchCategory);
+        this.$root.toast('Add favorite', 'New match has been added to your favorites.', 'success');
+      }
+      catch(error){
+        this.$root.toast('Add favorite', error.message, 'danger');
+      }
 
     }
   },

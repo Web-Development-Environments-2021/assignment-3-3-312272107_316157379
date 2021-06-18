@@ -103,6 +103,7 @@ export default {
          if(this.$router.currentRoute.fullPath != "/"){
            this.$router.push("/");
          }
+         this.$root.toast('Login','Login successful','success');
       } catch (err) {
         console.log(err);
         this.form.submitError =  err.message;

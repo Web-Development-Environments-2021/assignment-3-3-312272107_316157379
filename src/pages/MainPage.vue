@@ -31,7 +31,7 @@ export default {
   data() {
     return {
       userLoggedIn: this.$store.state.username,
-      threeFavoriteMatches: []
+      threeFavoriteMatches: [],
     };
   },
   watch: {
@@ -39,15 +39,17 @@ export default {
       immediate: true,
       deep: true,
       handler() {
-        this.getFavoriteMatches();
-        },
+        if (this.userLoggedIn) {
+          this.getFavoriteMatches();
+        }
+      },
     },
   },
   methods: {
-    getFavoriteMatches: async function(){
+    getFavoriteMatches: async function() {
       let allFavoriteMatches = await this.$store.actions.updateMatches();
       this.threeFavoriteMatches = allFavoriteMatches.slice(0, 3);
-    }
+    },
   },
 };
 </script>
