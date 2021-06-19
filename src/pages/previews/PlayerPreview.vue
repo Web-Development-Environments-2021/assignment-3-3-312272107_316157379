@@ -1,0 +1,58 @@
+<template>
+  <div>
+    <b-card style="max-width: 20rem;">
+      <b-card-img no-body @click="navigateToPlayerPage" img-left :src="`${playerImg}`" class="rounded-0" width="200" height="200"></b-card-img>
+
+      <b-card-body>
+        <b-card-title>
+          <router-link :to="{ name: playerPagePath }"
+            >{{ playerName }}</router-link>
+        </b-card-title>
+
+        <b-list-group flush>
+          <b-list-group-item>Team Name: {{teamName}}</b-list-group-item>
+          <b-list-group-item>Player Position: {{playerPosition}}</b-list-group-item>
+        </b-list-group>
+      </b-card-body>
+    </b-card> 
+  </div>
+</template>
+
+<script>
+export default {
+  props: {
+    playerID: {
+      type: Number,
+      required: true
+    },
+    playerImg: {
+      type: String,
+      required: true,
+    },
+    teamName: {
+      type: String,
+      require: true,
+    },
+    playerName: {
+        type: String,
+        require: true,
+    },
+    playerPosition: {
+      type: Number,
+      require: true,
+    },
+  },
+  computed: {
+    playerPagePath() {
+      return `playerPage/${this.playerID}`;
+    },
+  },
+  methods: {
+      navigateToPlayerPage(){
+          this.$router.push(this.playerPagePath).catch(() => {console.log('traveling in the same page')}); // incase in the same page - catch error and do nothing
+      }
+  }
+};
+</script>
+
+<style></style>

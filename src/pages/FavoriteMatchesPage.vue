@@ -28,8 +28,8 @@ export default {
       this.allFavoriteMatches = await this.updateMatches();
     },
   },
-  created() {
-    this.getFavoriteMatches();
+  async created() {
+    await this.getFavoriteMatches();
   },
 };
 </script>
