@@ -1,6 +1,6 @@
 <template>
   <div>
-    <b-card-group deck>
+    <b-card-group>
       <player-preview
         v-for="(player, index) in players"
         :key="index"
@@ -8,6 +8,7 @@
         :playerImg="player.image"
         :playerName="player.full_name"
         :playerPosition="player.position"
+        :inFavorites="player.in_favorites"
         :teamName="playersTeam ? playersTeam : player.teamName"
       ></player-preview>
     </b-card-group>
