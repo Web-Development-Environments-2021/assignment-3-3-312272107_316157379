@@ -36,8 +36,8 @@ export default {
 
   methods: {
     async getFavoriteMatches() {
-      let allFavoriteMatches = await this.$store.actions.updateMatches();
-      this.threeFavoriteMatches = allFavoriteMatches.slice(0, 3);
+      let allFavoriteMatches = await this.updateMatches();
+      this.threeFavoriteMatches = allFavoriteMatches.future_matches.slice(0, 3);
     },
   },
   created() {

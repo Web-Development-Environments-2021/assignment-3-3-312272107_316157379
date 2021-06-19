@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import FavoriteMatches from "../../components/MatchesInTable.vue";
+import FavoriteMatches from "../components/MatchesInTable.vue";
 export default {
   components: {
     "favorite-matches": FavoriteMatches,
@@ -19,7 +19,7 @@ export default {
   },
   methods: {
     async getFavoriteMatches() {
-      this.allFavoriteMatches = await this.$store.actions.updateMatches();
+      this.allFavoriteMatches = await this.updateMatches();
     },
   },
   created() {

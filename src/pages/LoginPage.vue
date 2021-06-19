@@ -100,7 +100,7 @@ export default {
           }
         );
          this.$store.actions.login(this.form.username);
-         this.$emit('loginSuccessful');
+         this.$emit('loginSuccessful')
          if(this.$router.currentRoute.fullPath != "/"){
            this.$router.push("/");
          }

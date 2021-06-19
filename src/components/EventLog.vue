@@ -8,12 +8,13 @@
       responsive="sm"
     >
     </b-table>
+  </div>
 </template>
 <script>
     export default {
         data() {
             return {
-                fields: ['event_date_time','minute_in_game','even_type','description']
+                fields: ['event_date_time','minute_in_game','event_type','description']
             }
         },
         props: {

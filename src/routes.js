@@ -1,6 +1,7 @@
 import Main from "./pages/MainPage";
 import NotFound from "./pages/NotFoundPage";
 
+
 const routes = [
   {
     path: "/",
@@ -25,7 +26,12 @@ const routes = [
   {
     path: "/about",
     name: "about",
-    component: () => import("./pages/AboutPage")
+    component: () => import('./pages/AboutPage')
+  },
+  {
+    path: "/stageMatches",
+    name: "stageMatches",
+    component: () => import('./pages/StageMatchesPage')
   },
   {
     path: "*",

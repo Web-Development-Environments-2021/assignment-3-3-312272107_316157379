@@ -87,6 +87,71 @@ let actions = Vue.observable(store_actions);
 let store = {state: state, actions: actions};
 Vue.prototype.$store = store;
 
+// move to mixin files if there's time
+Vue.mixin({
+  methods: {
+    isObjectEmpty(obj) {
+      return obj && Object.keys(obj).length === 0 && obj.constructor === Object;
+    },
+    areObjectsEqual(obj1, obj2) {
+      return JSON.stringify(obj1) === JSON.stringify(obj2);
+    },
+     
+    async updateMatches() {
+      try {
+        // console.log('entered here');
+        if (this.$store.state.favoriteMatchesFresh) {
+          
+          return this.$store.state.favoriteMatches;
+        } else {
+          let favoriteMatches = await this.axios.get(
+            `${this.axios.defaults.baseURL}/users/favorites/match`
+            ).then(favoriteMatches => favoriteMatches.data);
+            this.$store.actions.setProperty("favoriteMatches", favoriteMatches);
+            // console.log('exited here');
+            this.$store.state.favoriteMatchesFresh = true;
+            return favoriteMatches;
+          }
+        } catch (error) {
+          console.log("error in update matches");
+          console.log(error.message);
+        }
+      },
+      
+      
+      async addToFavorites(categoryID, categoryName) {
+        try {
+          await this.axios.post(
+            `${this.axios.defaults.baseURL}/users/favorites/${categoryName}`,
+            {
+              favorite_id: categoryID,
+            }
+            )
+            this.$store.state.favoriteMatchesFresh = false;
+          } catch (error) {
+            console.log(error);
+            throw error;
+          }
+        },
+
+        async getLeagueDetails() {
+          try {
+            if (!this.$store.actions.hasProperty("leagueDetails")) {
+              //first time retrieving league details
+              let league_details = await this.axios.get(
+                `${this.axios.defaults.baseURL}/league/details`
+              ).then(details => details.data);
+              this.$store.actions.setProperty("leagueDetails", league_details);
+              return league_details;
+            } else {
+              return this.$store.state.leagueDetails;
+            }
+          } catch (err) {
+            this.$root.toast('League Details','Could not retrieve league details','danger');
+          }
+        },
+    },
+  }),
 
 new Vue({
   router,

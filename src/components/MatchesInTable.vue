@@ -5,10 +5,12 @@
       :items="matchesToDisplayAfterSplit"
       :fields="fields"
       small
+      striped
+      hover
     >
-      <!-- hopefully all the other cells just render normally  -->
-
-
+      <template #cell(index)="data">
+        {{ data.index + 1 }}
+      </template>
       <template #cell(home_team)="data">
         <router-link
           to="{ name: 'teamPage', params: {teamName: data.value }}"
@@ -35,28 +37,29 @@
       <template #cell(event_log)="data">
         <b-button
           :disabled="!matchHasEventLog(data.item)"
-          @click="toggleEventLog(data.item.event_log)"
+          @click="toggleEventLog(data.item.event_log, data.index)"
           size="sm"
           variant="info"
-          >{{ displayEventLog ? "Hide" : "Show" }} Event Log</b-button
+          >{{ rowIndOfEventLog == data.index ? "Hide" : "Show" }} Event
+          Log</b-button
         >
       </template>
 
       <template #cell(addFavorite)="data">
         <b-button
-          :disabled="! enableAddToFavorites"
-          @click="addToFavorites(data.item.match_id, 'match')"
-            size="sm"
-          variant="primary"
+          :disabled="disableFavorites"
+          @click="addMatchToFavorites(data.item.match_id)"
+          size="sm"
+          variant="secondary"
         >
-        Add to Favorites
-        </b-button>
+          Add to Favorites</b-button
+        >
       </template>
     </b-table>
 
     <b-jumbotron
       header="No Matches To Display"
-      lead="Navigate to current stage matches page to view matches and to add them to your favorites"
+      lead="Current stage matches page displays matches and allows you to add them to your favorites"
       v-else
     >
       <!-- <b-button variant="primary" href="#">Favorite Matches</b-button> -->
@@ -75,6 +78,7 @@ export default {
   },
   data() {
     return {
+      rowIndOfEventLog: -1,
       currentEventLog: [],
       matchesToDisplayAfterSplit: [],
       fields: [
@@ -105,7 +109,7 @@ export default {
     matchesToDisplay: {
       immediate: true,
       handler() {
-        if (this.$store.actions.isObjectEmpty(this.matchesToDisplay[0])) {
+        if (this.isObjectEmpty(this.matchesToDisplay[0])) {
           return;
         }
         this.splitDateTime();
@@ -116,6 +120,9 @@ export default {
     displayEventLog: function() {
       return this.currentEventLog.length > 0;
     },
+    disableFavorites(){
+      return !this.enableAddToFavorites || !this.$store.state.username;
+    }
   },
   methods: {
     splitDateTime() {
@@ -127,18 +134,19 @@ export default {
         return match;
       });
     },
-    toggleEventLog(newEventLog) {
+    toggleEventLog(newEventLog, rowIndex) {
       if (this.currentEventLog.length == 0) {
         // none displayed
         this.currentEventLog = newEventLog;
-      } else if (
-        this.$store.actions.areObjectsEqual(this.currentEventLog, newEventLog)
-      ) {
+        this.rowIndOfEventLog = rowIndex;
+      } else if (this.areObjectsEqual(this.currentEventLog, newEventLog)) {
         // hide event log being displayed after two clicks
         this.currentEventLog = [];
+        this.rowIndOfEventLog = -1;
       } else {
         // show new event log
         this.currentEventLog = newEventLog;
+        this.rowIndOfEventLog = rowIndex;
       }
     },
     score: function(homeTeamGoals, awayTeamGoals) {
@@ -149,20 +157,21 @@ export default {
     },
     matchHasEventLog: function(currentMatch) {
       return (
-        this.matchOver(currentMatch) &&
-        currentMatch.hasOwnProperty("event_log")
+        this.matchOver(currentMatch) && currentMatch.hasOwnProperty("event_log")
       );
     },
-    async addToFavorites(matchID,matchCategory){
-      try{
-        await this.$store.actions.addToFavorites(matchID,matchCategory);
-        this.$root.toast('Add favorite', 'New match has been added to your favorites.', 'success');
+    async addMatchToFavorites(matchID) {
+      try {
+        await this.addToFavorites(matchID, "match");
+        this.$root.toast(
+          "Add favorite",
+          "New match has been added to your favorites.",
+          "success"
+        );
+      } catch (error) {
+        this.$root.toast("Add favorite", error.message, "danger");
       }
-      catch(error){
-        this.$root.toast('Add favorite', error.message, 'danger');
-      }
-
-    }
+    },
   },
 };
 </script>

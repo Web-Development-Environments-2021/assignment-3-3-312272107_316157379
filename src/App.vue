@@ -7,6 +7,7 @@
 
         <b-nav-item :to="{ name: 'about' }">About</b-nav-item>
         <b-nav-item :to="{ name: 'search' }">Search</b-nav-item>
+        <b-nav-item :to="{ name: 'stageMatches' }">Matches In Current Stage</b-nav-item>
         <b-nav-item disabled>hello {{usernameDisplay}}</b-nav-item>
         </b-navbar-nav>
 

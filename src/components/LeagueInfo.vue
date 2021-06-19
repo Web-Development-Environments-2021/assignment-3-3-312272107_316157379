@@ -4,7 +4,7 @@
       <b-list-group>
         <b-card-title>League Details</b-card-title>
         <b-list-group-item
-          v-for="(value, key, index) in league_details"
+          v-for="(value, key, index) in leagueDetails"
           v-bind:key="index"
           >{{ value }}</b-list-group-item
         >
@@ -23,7 +23,7 @@ import MatchPreview from "./MatchesInTable.vue";
 export default {
   data() {
     return {
-      league_details: {
+      leagueDetails: {
         league: "",
         season: "",
         stage: "",
@@ -34,32 +34,12 @@ export default {
   components: {
     "match-preview": MatchPreview,
   },
-  methods: {
-    async getLeagueDetails() {
-      try {
-        if (!this.$store.actions.hasProperty("leagueDetails")) {
-          //first time retrieving league details
-          let league_details = await this.axios.get(
-            `${this.axios.defaults.baseURL}/league/details`
-          );
-          this.league_details.league = league_details.data.league_name;
-          this.league_details.season = league_details.data.current_season_name;
-          this.league_details.stage = league_details.data.current_stage_name;
-          this.nextMatch = league_details.data.next_match_details;
-
-          this.$store.actions.setProperty("leagueDetails", this.league_details);
-          this.$store.actions.setProperty("nextMatch", this.nextMatch);
-        } else {
-          this.league_details = this.$store.state.leagueDetails;
-          this.nextMatch = this.$store.state.nextMatch;
-        }
-      } catch (err) {
-        console.log(err);
-      }
-    },
-  },
   async mounted() {
-    await this.getLeagueDetails();
+    const league_details = await this.getLeagueDetails();
+    this.leagueDetails.league = league_details.league_name;
+    this.leagueDetails.season = league_details.current_season_name;
+    this.leagueDetails.stage = league_details.current_stage_name;
+    this.nextMatch = league_details.next_match_details;
   },
 };
 </script>
