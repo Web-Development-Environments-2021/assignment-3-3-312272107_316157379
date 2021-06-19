@@ -1,6 +1,6 @@
 <template>
   <div>
-    <team-preview :teamLogo="teamDetails.team_logo" :teamName="teamDetails.team_name"></team-preview>
+    <team-preview v-if="dataLoaded" :teamLogo="teamDetails.team_logo" :teamName="teamDetails.team_name"></team-preview>
     <player-collection :players="playersDetails" :playersTeam="teamDetails.team_name"></player-collection>
     <past-future-matches
       :header="`Matches of team ${teamDetails.team_name}`"
@@ -29,6 +29,7 @@ export default {
       futureMatches: [],
       lead: "This page displays the team's players and matches.",
       teamID: 939, // for testing
+      dataLoaded: false
     };
   },
 //   props: {
@@ -57,13 +58,14 @@ export default {
             this.playersDetails = teamDetails.players_details;
             this.$store.actions.setProperty("teamDetails", teamDetails);
         }
+            this.dataLoaded = true;
       } catch (error) {
         console.log(error.message);
         this.$root.toast("Team Details", error.message, "danger");
       }
     },
   },
-  async mounted() {
+  async created() {
     await this.getTeamDetails();
   },
 };

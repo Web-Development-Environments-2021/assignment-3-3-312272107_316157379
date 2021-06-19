@@ -1,15 +1,11 @@
 import axios from "axios";
 axios.defaults.withCredentials = true;
 axios.defaults.baseURL = "http://localhost:3000";
-
-
-
 let state = {
   username: "",
   leagueID: 271, //Superliga
   favoriteMatchesFresh: false,
   matchesInStageFresh: false,
-
 };
 let actions = {
   login: (username) => {
