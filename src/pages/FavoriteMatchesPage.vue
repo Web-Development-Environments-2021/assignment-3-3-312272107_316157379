@@ -1,8 +1,14 @@
 <template>
   <div>
-      <favorite-matches  :favoritesMatches="allFavoriteMatches" :enableAddToFavorites="false" >
-          
-      </favorite-matches>
+    <b-jumbotron
+      header="Watch Your Favorite Matches Here"
+    >
+    </b-jumbotron>
+    <favorite-matches
+      :matchesToDisplay="allFavoriteMatches"
+      :enableAddToFavorites="false"
+    >
+    </favorite-matches>
   </div>
 </template>
 
@@ -28,6 +34,4 @@ export default {
 };
 </script>
 
-<style>
-
-</style>
+<style></style>

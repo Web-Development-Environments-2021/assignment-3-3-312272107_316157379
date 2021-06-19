@@ -59,11 +59,11 @@
 
     <b-jumbotron
       header="No Matches To Display"
-      lead="Current stage matches page displays matches and allows you to add them to your favorites"
+      lead="Current Stage Matches Page displays matches and allows you to add them to your favorites"
       v-else
     >
       <!-- <b-button variant="primary" href="#">Favorite Matches</b-button> -->
-      <router-link to="/" tag="button">Matches Page</router-link>
+      <router-link to="/stageMatches" tag="button">Move to Matches Page</router-link>
     </b-jumbotron>
 
     <event-log v-if="displayEventLog" :eventLog="currentEventLog"></event-log>
