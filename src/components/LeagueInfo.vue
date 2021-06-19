@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import MatchPreview from "./MatchesInTable.vue";
+import MatchPreview from "./matches/MatchesInTable.vue";
 export default {
   data() {
     return {

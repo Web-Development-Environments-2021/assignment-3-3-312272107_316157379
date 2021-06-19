@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import FavoriteMatches from "../components/MatchesInTable.vue";
+import FavoriteMatches from "../components/matches/MatchesInTable.vue";
 export default {
   components: {
     "favorite-matches": FavoriteMatches,

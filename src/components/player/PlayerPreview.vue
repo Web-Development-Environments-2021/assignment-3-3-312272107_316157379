@@ -1,7 +1,7 @@
 <template>
   <div>
-    <b-card  style="max-width: 20rem;">
-      <b-card-img no-body @click="navigateToPlayerPage"  :src="`${playerImg}`" class="rounded-0" ></b-card-img>
+    <b-card  style="max-width: 30rem;">
+      <b-card-img no-body @click="navigateToPlayerPage"  :src="`${playerImg}`" ></b-card-img>
       <b-card-body>
         <b-card-title>
           <router-link :to="{ name: playerPagePath }"

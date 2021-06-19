@@ -21,35 +21,35 @@
 </template>
 
 <script>
-import PlayerPreview from "../components/previews/PlayerPreview.vue";
-import PlayerAdditionaDetails from "../components/PlayerAdditionalDetails.vue";
+import PlayerPreview from "./PlayerPreview.vue";
+import PlayerAdditionaDetails from "../PlayerAdditionalDetails.vue";
 export default {
   components: {
     "player-preview": PlayerPreview,
     "player-additional-details": PlayerAdditionaDetails,
   },
-  data() {
-    return {
-      playerDetails: {
-        id: 3,
-        player_position: 1,
-        common_name: "J. Forrest",
-        full_name: "James Forrest",
-        birth_date: "07/07/1991",
-        birth_country: "Scotland",
-        height: "175 cm",
-        weight: null,
-        image: "https://cdn.sportmonks.com/images/soccer/players/8/172104.png",
-        team_name: "Some Team",
-      },
-    };
-  },
-  //   props: {
+  // data() {
+  //   return {
   //     playerDetails: {
-  //       type: Object,
-  //       require: true,
+  //       id: 3,
+  //       player_position: 1,
+  //       common_name: "J. Forrest",
+  //       full_name: "James Forrest",
+  //       birth_date: "07/07/1991",
+  //       birth_country: "Scotland",
+  //       height: "175 cm",
+  //       weight: null,
+  //       image: "https://cdn.sportmonks.com/images/soccer/players/8/172104.png",
+  //       team_name: "Some Team",
   //     },
-  //   },
+  //   };
+  // },
+    props: {
+      playerDetails: {
+        type: Object,
+        require: true,
+      },
+    },
 };
 </script>
 

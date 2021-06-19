@@ -71,7 +71,7 @@
 </template>
 
 <script>
-import EventLog from "./EventLog.vue";
+import EventLog from "../EventLog.vue";
 export default {
   components: {
     "event-log": EventLog,

@@ -20,7 +20,7 @@
 
 <script>
 import LeagueInfo from "../components/LeagueInfo";
-import FavoriteMatches from "../components/MatchesInTable.vue";
+import FavoriteMatches from "../components/matches/MatchesInTable.vue";
 import LoginPage from "../pages/LoginPage";
 export default {
   components: {

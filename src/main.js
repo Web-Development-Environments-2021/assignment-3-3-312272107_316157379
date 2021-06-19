@@ -32,6 +32,7 @@ import {
   JumbotronPlugin,
   ListGroupPlugin ,
   TablePlugin,
+  ImagePlugin,
 } from "bootstrap-vue";
 [
   FormGroupPlugin,
@@ -48,6 +49,7 @@ import {
   JumbotronPlugin,
   ListGroupPlugin,
   TablePlugin,
+  ImagePlugin,
 ].forEach((x) => Vue.use(x));
 Vue.use(Vuelidate);
 
