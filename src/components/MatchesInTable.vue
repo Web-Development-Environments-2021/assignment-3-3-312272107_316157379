@@ -48,7 +48,7 @@
       <template #cell(addFavorite)="data">
         <b-button
           :disabled="disableFavorites"
-          @click="addMatchToFavorites(data.item.match_id)"
+          @click="addToFavorites(data.item.match_id,'match')"
           size="sm"
           variant="secondary"
         >
@@ -159,18 +159,6 @@ export default {
       return (
         this.matchOver(currentMatch) && currentMatch.hasOwnProperty("event_log")
       );
-    },
-    async addMatchToFavorites(matchID) {
-      try {
-        await this.addToFavorites(matchID, "match");
-        this.$root.toast(
-          "Add favorite",
-          "New match has been added to your favorites.",
-          "success"
-        );
-      } catch (error) {
-        this.$root.toast("Add favorite", error.message, "danger");
-      }
     },
   },
 };

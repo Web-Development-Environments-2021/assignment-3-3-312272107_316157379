@@ -128,9 +128,13 @@ Vue.mixin({
             }
             )
             this.$store.state.favoriteMatchesFresh = false;
+            this.$root.toast(
+              "Add favorite",
+              "New match has been added to your favorites.",
+              "success"
+            );
           } catch (error) {
-            console.log(error);
-            throw error;
+            this.$root.toast('Add Favorites','Match already in favorites','danger');
           }
         },
 
