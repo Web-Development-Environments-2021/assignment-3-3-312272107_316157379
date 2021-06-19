@@ -108,7 +108,6 @@ Vue.mixin({
             `${this.axios.defaults.baseURL}/users/favorites/match`
             ).then(favoriteMatches => favoriteMatches.data);
             this.$store.actions.setProperty("favoriteMatches", favoriteMatches);
-            // console.log('exited here');
             this.$store.state.favoriteMatchesFresh = true;
             return favoriteMatches;
           }
