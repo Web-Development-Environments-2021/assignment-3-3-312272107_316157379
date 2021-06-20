@@ -1,6 +1,6 @@
 <template>
   <div>
-    <b-card-group>
+    <b-card-group v-if="players.length > 0">
       <player-preview
         v-for="(player, index) in players"
         :key="index"
@@ -12,6 +12,11 @@
         :teamName="playersTeam ? playersTeam : player.teamName"
       ></player-preview>
     </b-card-group>
+    <b-jumbotron
+      header="No Players To Display"
+      v-else
+    >
+    </b-jumbotron>
   </div>
 </template>
 

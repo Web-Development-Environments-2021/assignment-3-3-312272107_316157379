@@ -23,13 +23,8 @@ export default {
       allFavoriteMatches: [],
     };
   },
-  methods: {
-    async getFavoriteMatches() {
-      this.allFavoriteMatches = await this.updateMatches();
-    },
-  },
   async created() {
-    await this.getFavoriteMatches();
+    this.allFavoriteMatches = await this.getFavorites('match');
   },
 };
 </script>

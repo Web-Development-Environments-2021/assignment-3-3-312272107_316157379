@@ -36,11 +36,11 @@ export default {
 
   methods: {
     async getFavoriteMatches() {
-      let allFavoriteMatches = await this.updateMatches();
+      let allFavoriteMatches = await this.getFavorites('match');
       this.threeFavoriteMatches = allFavoriteMatches.slice(0, 3);
     },
   },
-  created() {
+  async created() {
     if(this.$store.state.username){
       this.getFavoriteMatches();
     }

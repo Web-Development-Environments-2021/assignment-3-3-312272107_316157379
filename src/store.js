@@ -4,7 +4,7 @@ axios.defaults.baseURL = "http://localhost:3000";
 let state = {
   username: "",
   leagueID: 271, //Superliga
-  favoriteMatchesFresh: false,
+  favoriteMatchesFresh: true,
   matchesInStageFresh: false,
 };
 let actions = {
@@ -21,8 +21,16 @@ let actions = {
   setProperty(param, value) {
     state[param] = value;
   },
-  updateProperty(prop,value){
-    state[prop].push(value);
+  notProp(propName){
+    state[propName] = !state[propName]
+  },
+  favoritesStored(favoritesCategory, favoritesPropName){
+    let baseCond = true;
+    if(favoritesCategory == 'match'){
+      baseCond = state.favoriteMatchesFresh;
+    }
+    baseCond = baseCond && actions.hasProperty(favoritesPropName);
+    return baseCond;
   }
 }
 

@@ -14,7 +14,7 @@
 <script>
 import PastFutureMatches from "../components/matches/PastFutureMatches.vue"
 import PlayerCollection from "../components/player/PlayerCollection.vue";
-import TeamPreview from "../components/team/TeamInfoPreview.vue";
+import TeamPreview from "../components/team/TeamPreview.vue";
 export default {
   components: {
     "past-future-matches": PastFutureMatches,
@@ -28,8 +28,8 @@ export default {
       pastMatches: [],
       futureMatches: [],
       lead: "This page displays the team's players and matches.",
+      dataLoaded: false,
       teamID: 939, // for testing
-      dataLoaded: false
     };
   },
 //   props: {

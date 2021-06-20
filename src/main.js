@@ -2,10 +2,10 @@ import Vue from "vue";
 import App from "./App.vue";
 import VueAxios from "vue-axios";
 import axios from "axios";
+import Pluralize from 'pluralize';
 
 axios.defaults.withCredentials = true;
 axios.defaults.baseURL = 'http://localhost:3000';
-
 
 import routes from "./routes";
 import VueRouter from "vue-router";
@@ -53,8 +53,6 @@ import {
 ].forEach((x) => Vue.use(x));
 Vue.use(Vuelidate);
 
-
-
 axios.interceptors.request.use(
   function(config) {
     // Do something before request is sent
@@ -99,26 +97,27 @@ Vue.mixin({
       return JSON.stringify(obj1) === JSON.stringify(obj2);
     },
      
-    async updateMatches() {
+    async getFavorites(favoritesCategory) {
       try {
-        // console.log('entered here');
-        if (this.$store.state.favoriteMatchesFresh) {
-          
-          return this.$store.state.favoriteMatches;
+        const favoritesPropName = 'favorite' + Pluralize(this.$root.capitalize(favoritesCategory),4);
+
+        if (this.$store.actions.favoritesStored(favoritesCategory,favoritesPropName)) {
+          // console.log('dafuq is this.');
+          return this.$store.state[favoritesPropName];
         } else {
-          let favoriteMatches = await this.axios.get(
-            `${this.axios.defaults.baseURL}/users/favorites/match`
-            ).then(favoriteMatches => favoriteMatches.data);
-            this.$store.actions.setProperty("favoriteMatches", favoriteMatches);
-            this.$store.state.favoriteMatchesFresh = true;
-            return favoriteMatches;
+          let favorites = await this.axios.get(
+            `${this.axios.defaults.baseURL}/users/favorites/${favoritesCategory}`
+            ).then(favorites => favorites.data);
+          this.$store.actions.setProperty(favoritesPropName, favorites);
+          return favorites;
           }
         } catch (error) {
-          console.log("error in update matches");
-          console.log(error.message);
+          this.$root.toast('Add Favorites',error.message,'danger');
         }
       },
-      
+      capitalize(term){
+          return term.charAt(0).toUpperCase() + term.slice(1);
+        },
       
       async addToFavorites(categoryID, categoryName) {
         try {
@@ -128,14 +127,16 @@ Vue.mixin({
               favorite_id: categoryID,
             }
             )
-            this.$store.state.favoriteMatchesFresh = false;
+            if(categoryName == 'match'){
+              this.$store.state.actions.notProp(favoriteMatchesFresh);
+            }
             this.$root.toast(
               "Add favorite",
-              "New match has been added to your favorites.",
+              `New ${categoryName} has been added to your favorites.`,
               "success"
             );
           } catch (error) {
-            this.$root.toast('Add Favorites','Match already in favorites','danger');
+            this.$root.toast('Add Favorites','Already in favorites','danger');
           }
         },
 

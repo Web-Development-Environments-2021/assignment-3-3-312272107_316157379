@@ -5,7 +5,7 @@
     >
     </b-jumbotron>
     <favorite-players
-      :players=""
+      :players="favoritePlayers"
     >
     </favorite-players>
   </div>
@@ -19,16 +19,11 @@ export default {
   },
   data() {
     return {
-      allFavoriteMatches: [],
+      favoritePlayers: [],
     };
   },
-  methods: {
-    async getFavoriteMatches() {
-      this.allFavoriteMatches = await this.updateMatches();
-    },
-  },
   async created() {
-    await this.getFavoriteMatches();
+    await this.getFavorites('player');
   },
 };
 </script>
