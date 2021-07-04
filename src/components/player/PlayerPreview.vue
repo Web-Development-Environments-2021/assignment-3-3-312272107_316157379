@@ -8,9 +8,9 @@
       ></b-card-img>
       <b-card-body>
         <b-card-title>
-          <router-link :to="{ name: playerPagePath }">{{
-            playerName
-          }}</router-link>
+          <router-link :to="{ name: 'playerPage', params: { player_id: playerID, disableAddToFavorites: !canAddToFavorites } }">
+            {{ playerName }}
+          </router-link>
         </b-card-title>
 
         <b-list-group flush>
@@ -19,12 +19,12 @@
             >Player Position: {{ playerPosition }}</b-list-group-item
           >
           <b-button
-            :disabled="localInFavorites"
+            :disabled="!canAddToFavorites"
             @click="addPlayerToFavorites()"
             size="sm"
             :variant="favoritesVariant"
           >
-            {{localInFavorites ? 'Added' : 'Add'}} to favorites</b-button
+            {{ localInFavorites ? "Can Not Be Added" : "Add" }} To Favorites</b-button
           >
         </b-list-group>
       </b-card-body>
@@ -36,8 +36,9 @@
 export default {
   data() {
     return {
-      localInFavorites: this.inFavorites,
-    };
+      localInFavorites: this.inFavorites
+      
+    }
   },
   props: {
     playerID: {
@@ -66,13 +67,15 @@ export default {
     },
   },
   computed: {
-    playerPagePath() {
-      // return `playerPage/${this.playerID}`;
-      return "main";
-    },
     favoritesVariant() {
       return this.localInFavorites ? "info" : "warning";
     },
+    playerPagePath() {
+      return "playerPage/" + this.playerID;
+    },
+    canAddToFavorites(){
+      return !this.localInFavorites && this.$store.state.username;
+    }
   },
   methods: {
     navigateToPlayerPage() {

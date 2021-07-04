@@ -39,9 +39,14 @@ const routes = [
     component: () => import('./pages/favorites/DynamicFavoritesPage')
   },
   {
-    path: "/teamPage",
+    path: "/teamPage/:team_name",
     name: "teamPage",
     component: () => import('./pages/TeamPage')
+  },
+  {
+    path: "/playerPage/:player_id",
+    name: "playerPage",
+    component: () => import('./pages/PlayerPage')
   },
   {
     path: "*",

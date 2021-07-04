@@ -1,4 +1,5 @@
-let password = 'asbzxc12' 
-let regex = /[a-zA-Z]\d/g;
-console.log(regex.test(password));
-// return regex.test(this.password);
+const someArr = [1,2,3];
+const notFound = someArr.find(aNum => aNum == 4);
+if(notFound){
+    console.log(notFound)
+}

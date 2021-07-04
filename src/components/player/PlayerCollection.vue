@@ -7,9 +7,9 @@
         :playerID="player.id"
         :playerImg="player.image"
         :playerName="player.full_name"
-        :playerPosition="player.position"
-        :inFavorites="player.in_favorites"
-        :teamName="playersTeam ? playersTeam : player.teamName"
+        :playerPosition="player.player_position"
+        :inFavorites="enableAddToFavorites && player.in_favorites"
+        :teamName="playersTeam ? playersTeam : player.team_name"
       ></player-preview>
     </b-card-group>
     <b-jumbotron
@@ -33,6 +33,10 @@ export default {
     },
     playersTeam: {
       type: String,
+    },
+    enableAddToFavorites: {
+      type: Boolean,
+      default: true,
     },
   },
 };

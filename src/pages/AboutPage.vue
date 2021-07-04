@@ -4,14 +4,15 @@
       <template #header>Brought to you by Avichai Edri and Tom Robissa</template>
 
       <template #lead>
-        We have been pursuing crippled cats and have been abusing them for three years. 
-        Watch our work on Github!
+        We have been web developing for a short period and would like to hear your feedback! 
+        Please contact us - tomrob@post.bgu.ac.il, avichaie@post.bgu.ac.il 
       </template>
 
       <hr class="my-4" />
 
+      <h1> Previous Work</h1>
       <p>
-          <a href="https://web-development-environments-2021.github.io/Pacman-Project/">Pac-Man Vanilla JS project</a>
+          <a href="https://tomrobis.github.io/PacmanProject/">Pac-Man Game</a>
       </p>
     </b-jumbotron>
   </div>

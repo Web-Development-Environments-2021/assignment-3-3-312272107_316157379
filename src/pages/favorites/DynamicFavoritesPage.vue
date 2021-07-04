@@ -49,9 +49,9 @@ export default {
     currentProperties() {
       switch (this.favoritesComponent) {
         case "favorite-teams":
-          return { teams: this.favorites };
+          return { teams: this.favorites, enableAddToFavorites: false };
         case "favorite-players":
-          return { players: this.favorites };
+          return { players: this.favorites, enableAddToFavorites: false };
         case "favorite-matches":
           return {
             matchesToDisplay: this.favorites,

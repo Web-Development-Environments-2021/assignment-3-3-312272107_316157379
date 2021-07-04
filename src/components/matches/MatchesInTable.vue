@@ -12,19 +12,15 @@
         {{ data.index + 1 }}
       </template>
       <template #cell(home_team)="data">
-        <router-link
-          to="{ name: 'teamPage', params: {teamName: data.value }}"
-          exact
-          >{{ data.value }}</router-link
-        >
+        <router-link :to="{ name: 'teamPage', params: { team_name: data.value } }">{{
+          data.value
+        }}</router-link>
       </template>
 
       <template #cell(away_team)="data">
-        <router-link
-          to="{ name: 'teamPage', params: {teamName: data.value }}"
-          exact
-          >{{ data.value }}</router-link
-        >
+        <router-link :to="{ name: 'teamPage', params: { team_name: data.value } }">{{
+          data.value
+        }}</router-link>
       </template>
 
       <template #cell(score)="data">
@@ -48,7 +44,7 @@
       <template #cell(addFavorite)="data">
         <b-button
           :disabled="disableFavorites"
-          @click="addToFavorites(data.item.match_id,'match')"
+          @click="addToFavorites(data.item.match_id, 'match')"
           size="sm"
           variant="secondary"
         >
@@ -63,7 +59,9 @@
       v-else
     >
       <!-- <b-button variant="primary" href="#">Favorite Matches</b-button> -->
-      <router-link to="/stageMatches" tag="button">Move to Matches Page</router-link>
+      <router-link to="/stageMatches" tag="button"
+        >Move to Matches Page</router-link
+      >
     </b-jumbotron>
 
     <event-log v-if="displayEventLog" :eventLog="currentEventLog"></event-log>
@@ -120,9 +118,9 @@ export default {
     displayEventLog: function() {
       return this.currentEventLog.length > 0;
     },
-    disableFavorites(){
+    disableFavorites() {
       return !this.enableAddToFavorites || !this.$store.state.username;
-    }
+    },
   },
   methods: {
     splitDateTime() {

@@ -1,17 +1,16 @@
 <template>
   <div>
-    <b-card  style="max-width: 40rem;">
+    <b-card  style="max-width: 80rem;">
       <b-card-body>
         <b-card-title>
-            Additional Details
+            <h1>More Info</h1>
         </b-card-title>
         <b-list-group flush>
           <b-list-group-item>Common Name: {{commonName}}</b-list-group-item>
-          <b-list-group-item>Nationality: {{birthCountry}}</b-list-group-item>
+          <b-list-group-item>Country of Birth: {{birthCountry}}</b-list-group-item>
           <b-list-group-item>Date of Birth: {{dateOfBirth}}</b-list-group-item>
           <b-list-group-item v-if="height!=null">Height {{height}}</b-list-group-item>
           <b-list-group-item v-if="weight!=null">Weight {{weight}}</b-list-group-item>
-
         </b-list-group>
       </b-card-body>
     </b-card> 
@@ -22,7 +21,7 @@
 export default {
   props: {
     commonName: {
-      type: Number,
+      type: String,
       required: true
     },
     birthCountry: {
@@ -34,10 +33,10 @@ export default {
       require: true,
     },
     height: {
-        type: Number,
+        type: String,
     },
     weight: {
-      type: Number,
+      type: String,
     },
   },
 };

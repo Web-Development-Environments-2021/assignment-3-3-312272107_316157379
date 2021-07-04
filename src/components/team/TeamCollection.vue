@@ -29,6 +29,10 @@ export default {
       type: Array,
       require: true,
     },
+    enableAddToFavorites: {
+      type: Boolean,
+      default: true,
+    }
   },
 };
 </script>

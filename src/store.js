@@ -1,6 +1,8 @@
 import axios from "axios";
 axios.defaults.withCredentials = true;
 axios.defaults.baseURL = "http://localhost:3000";
+
+
 let state = {
   username: "",
   leagueID: 271, //Superliga
@@ -31,7 +33,7 @@ let actions = {
     }
     baseCond = baseCond && actions.hasProperty(favoritesPropName);
     return baseCond;
-  }
+  },
 }
 
 

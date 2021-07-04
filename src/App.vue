@@ -9,7 +9,7 @@
         <b-nav-item :to="{ name: 'search' }">Search</b-nav-item>
         <b-nav-item :to="{ name: 'stageMatches' }">Matches In Current Stage</b-nav-item>
         <b-nav-item v-if="$store.state.username" :to="{ name: 'favorites' }">Favorites</b-nav-item>
-        <b-nav-item :to="{ name: 'teamPage' }">Team Page Test</b-nav-item>
+        <!-- <b-nav-item :to="{ name: 'teamPage' }">Team Page Test</b-nav-item> -->
         <b-nav-item disabled>hello {{usernameDisplay}}</b-nav-item>
         </b-navbar-nav>
 
