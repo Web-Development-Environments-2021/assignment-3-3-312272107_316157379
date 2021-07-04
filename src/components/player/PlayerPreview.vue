@@ -79,7 +79,7 @@ export default {
     navigateToPlayerPage() {
       this.$router.push(this.playerPagePath).catch(() => {
         console.log("traveling in the same page");
-      }); // incase in the same page - catch error and do nothing
+      });
     },
     async addPlayerToFavorites() {
       await this.addToFavorites(this.playerID, "player");
