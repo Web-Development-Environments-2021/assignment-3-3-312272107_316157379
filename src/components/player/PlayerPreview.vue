@@ -8,7 +8,7 @@
       ></b-card-img>
       <b-card-body>
         <b-card-title>
-          <router-link :to="{ name: 'playerPage', params: { player_id: playerID, playerInFavorites: localInFavorites } }">
+          <router-link :to="playerPagePath">
             {{ playerName }}
           </router-link>
         </b-card-title>
@@ -36,7 +36,8 @@
 export default {
   data() {
     return {
-      localInFavorites: this.inFavorites
+      localInFavorites: this.inFavorites,
+      playerPagePath: { name: 'playerPage', params: { player_id: this.playerID, playerInFavorites: this.localInFavorites } }
       
     }
   },
@@ -69,9 +70,6 @@ export default {
   computed: {
     favoritesVariant() {
       return this.localInFavorites ? "info" : "warning";
-    },
-    playerPagePath() {
-      return "playerPage/" + this.playerID;
     },
     canAddToFavorites(){
       return !this.localInFavorites && this.$store.state.username;
