@@ -8,7 +8,7 @@
       ></b-card-img>
       <b-card-body>
         <b-card-title>
-          <router-link :to="{ name: 'playerPage', params: { player_id: playerID, disableAddToFavorites: !canAddToFavorites } }">
+          <router-link :to="{ name: 'playerPage', params: { player_id: playerID, playerInFavorites: localInFavorites } }">
             {{ playerName }}
           </router-link>
         </b-card-title>

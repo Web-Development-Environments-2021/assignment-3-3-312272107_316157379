@@ -13,7 +13,7 @@
         :teamName="playerDetails.team_name"
         :playerName="playerDetails.full_name"
         :playerID="playerDetails.id"
-        :inFavorites="$route.params.disableAddToFavorites"
+        :inFavorites="$route.params.playerInFavorites"
       ></player-preview>
       <player-additional-details
         :commonName="playerDetails.common_name"
