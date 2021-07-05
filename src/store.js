@@ -14,7 +14,7 @@ let actions = {
     state.username = username;
   },
   logout() {
-    state.username = "";
+    state.username = ""; 
   },
   hasProperty(paramAsString) {
     // return localStorage.getItem(storageParam);

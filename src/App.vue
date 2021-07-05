@@ -39,8 +39,10 @@
 export default {
   name: "App",
   methods: {
-    Logout() {
+    async Logout() {
       this.$store.actions.logout();
+      await this.axios.get(
+        `${this.axios.defaults.baseURL}/logout`);
       this.$root.toast("Logout", "User logged out successfully", "success");
 
       this.$router.push("/").catch(() => {
