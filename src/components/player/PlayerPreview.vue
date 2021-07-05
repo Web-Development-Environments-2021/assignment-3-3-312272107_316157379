@@ -19,12 +19,12 @@
             >Player Position: {{ playerPosition }}</b-list-group-item
           >
           <b-button
-            :disabled=" localInFavorites || !$store.state.username"
+            :disabled=" playerInFavorites"
             @click="addPlayerToFavorites()"
             size="sm"
             :variant="favoritesVariant"
           >
-            {{ localInFavorites ? "Can Not Be Added" : "Add" }} To Favorites</b-button
+            {{ playerInFavorites ? "Can Not Be Added" : "Add" }} To Favorites</b-button
           >
         </b-list-group>
       </b-card-body>
@@ -69,8 +69,11 @@ export default {
   },
   computed: {
     favoritesVariant() {
-      return this.localInFavorites ? "info" : "warning";
+      return this.playerInFavorites ? "info" : "warning";
     },
+    playerInFavorites(){
+      return this.localInFavorites || !this.$store.state.username;
+    }
   },
   methods: {
     navigateToPlayerPage() {
