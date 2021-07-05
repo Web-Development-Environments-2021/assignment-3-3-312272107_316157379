@@ -12,21 +12,58 @@
         {{ data.index + 1 }}
       </template>
       <template #cell(home_team)="data">
-        <router-link :to="{ name: 'teamPage', params: { team_name: data.value } }">{{
-          data.value
-        }}</router-link>
+        <router-link
+          :to="{ name: 'teamPage', params: { team_name: data.value } }"
+          >{{ data.value }}</router-link
+        >
       </template>
 
       <template #cell(away_team)="data">
-        <router-link :to="{ name: 'teamPage', params: { team_name: data.value } }">{{
-          data.value
-        }}</router-link>
+        <router-link
+          :to="{ name: 'teamPage', params: { team_name: data.value } }"
+          >{{ data.value }}</router-link
+        >
       </template>
 
-      <template #cell(score)="data">
-        <span v-if="matchOver(data.item)">{{
-          score(data.item.home_team_goals, data.item.away_team_goals)
-        }}</span>
+      <template #cell(home_goals)="data">
+        <b-dropdown
+          v-if="matchOver(data.item)"
+          size="sm"
+          :text="data.item.home_team_goals.toString()"
+          class="m-2"
+          variant="primary"
+        >
+          <b-dropdown-item-button
+            v-for="index in 5"
+            :key="index"
+            :value="index - 1"
+            @click="
+              updateScore(data.item, data.item.home_team_goals, index-1, true)
+            "
+            >{{ index - 1 }}
+          </b-dropdown-item-button>
+        </b-dropdown>
+        <span v-else>NA</span>
+      </template>
+
+      <template #cell(away_goals)="data">
+        <b-dropdown
+          v-if="matchOver(data.item)"
+          size="sm"
+          :text="data.item.away_team_goals.toString()"
+          class="m-2"
+          variant="primary"
+        >
+          <b-dropdown-item-button
+            v-for="index in 5"
+            :key="index"
+            :value="index - 1"
+            @click="
+              updateScore(data.item, data.item.away_team_goals, index-1, false)
+            "
+            >{{ index - 1 }}
+          </b-dropdown-item-button>
+        </b-dropdown>
         <span v-else>NA</span>
       </template>
 
@@ -85,7 +122,8 @@ export default {
         "away_team",
         "date",
         "time",
-        "score",
+        "home_goals",
+        "away_goals",
         "venue",
         "event_log",
         "addFavorite",
@@ -147,8 +185,24 @@ export default {
         this.rowIndOfEventLog = rowIndex;
       }
     },
-    score: function(homeTeamGoals, awayTeamGoals) {
-      return homeTeamGoals.toString() + "-" + awayTeamGoals.toString();
+    async updateScore(matchDetails, currGoals, newGoals, isHomeTeam) {
+      if (currGoals == newGoals) {
+        return;
+      }
+      try {
+        await this.axios.put(
+          `${this.axios.defaults.baseURL}/users/union_rep/${matchDetails.match_id}/${newGoals}`,
+          { isHomeTeam: isHomeTeam }
+        );
+        isHomeTeam
+          ? (matchDetails.home_team_goals = newGoals)
+          : (matchDetails.away_team_goals = newGoals);
+        this.$store.state.matchesInStageFresh = false;
+        this.$root.toast("New Score", (isHomeTeam ? 'Home team' : 'Away team') + ' score updated to ' + newGoals  , "info");
+      } catch (error) {
+        console.log(error.message);
+        this.$root.toast("New Score", 'Please login as a union rep before updating matches scores', "danger");
+      }
     },
     matchOver: function(currentMatch) {
       return currentMatch.is_over == true;
