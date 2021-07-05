@@ -19,7 +19,7 @@
             >Player Position: {{ playerPosition }}</b-list-group-item
           >
           <b-button
-            :disabled="!canAddToFavorites"
+            :disabled=" localInFavorites || !$store.state.username"
             @click="addPlayerToFavorites()"
             size="sm"
             :variant="favoritesVariant"
@@ -37,7 +37,7 @@ export default {
   data() {
     return {
       localInFavorites: this.inFavorites,
-      playerPagePath: { name: 'playerPage', params: { player_id: this.playerID, playerInFavorites: this.localInFavorites } }
+      playerPagePath: { name: 'playerPage', params: { player_id: this.playerID} }
       
     }
   },
@@ -71,9 +71,6 @@ export default {
     favoritesVariant() {
       return this.localInFavorites ? "info" : "warning";
     },
-    canAddToFavorites(){
-      return !this.localInFavorites && this.$store.state.username;
-    }
   },
   methods: {
     navigateToPlayerPage() {

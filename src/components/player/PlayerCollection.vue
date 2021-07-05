@@ -8,7 +8,7 @@
         :playerImg="player.image"
         :playerName="player.full_name"
         :playerPosition="player.player_position"
-        :inFavorites="enableAddToFavorites && player.in_favorites"
+        :inFavorites="!enableAddToFavorites || player.in_favorites"
         :teamName="playersTeam ? playersTeam : player.team_name"
       ></player-preview>
     </b-card-group>
