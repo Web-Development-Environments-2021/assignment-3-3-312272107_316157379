@@ -98,8 +98,10 @@ export default {
             username: this.form.username,
             password: this.form.password
           }
-        );
+        ).then( (res) => res.data);
          this.$store.actions.login(this.form.username);
+         this.$store.actions.setProperty("roles",response);
+
          this.$emit('loginSuccessful')
          if(this.$router.currentRoute.fullPath != "/"){
            this.$router.push("/");

@@ -43,6 +43,7 @@ export default {
       this.$store.actions.logout();
       await this.axios.get(
         `${this.axios.defaults.baseURL}/logout`);
+      this.$store.actions.setProperty("roles","");
       this.$root.toast("Logout", "User logged out successfully", "success");
 
       this.$router.push("/").catch(() => {
