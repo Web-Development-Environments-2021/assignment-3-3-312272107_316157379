@@ -8,6 +8,9 @@
         <b-nav-item :to="{ name: 'about' }">About</b-nav-item>
         <b-nav-item :to="{ name: 'search' }">Search</b-nav-item>
         <b-nav-item :to="{ name: 'stageMatches' }">Matches In Current Stage</b-nav-item>
+
+        <b-nav-item :to="{ name: 'LeagueManagePage' }">League Manage Page</b-nav-item>
+
         <b-nav-item v-if="$store.state.username" :to="{ name: 'favorites' }">Favorites</b-nav-item>
         <!-- <b-nav-item :to="{ name: 'teamPage' }">Team Page Test</b-nav-item> -->
         <b-nav-item disabled>hello {{usernameDisplay}}</b-nav-item>
@@ -41,6 +44,8 @@ export default {
   methods: {
     Logout() {
       this.$store.actions.logout();
+      this.$store.actions.setProperty("roles","");
+
       this.$root.toast("Logout", "User logged out successfully", "success");
 
       this.$router.push("/").catch(() => {

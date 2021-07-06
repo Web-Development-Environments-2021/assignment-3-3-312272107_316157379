@@ -1,0 +1,1 @@
+export default ['København','Horsens','Brøndby','SønderjyskE','Midtjylland','AaB','OB','Randers','Nordsjælland','Lyngby','AGF','Vejle'];
