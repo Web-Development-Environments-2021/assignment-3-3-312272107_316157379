@@ -104,7 +104,7 @@ export default {
          this.$store.actions.setProperty("roles",user_roles);
 
          this.$emit('loginSuccessful')
-         if(this.$router.currentRoute.fullPath != "/"){
+         if(this.$router.currentRoute.fullPath != "/"){ 
            this.$router.push("/");
          }
          this.$root.toast('Login','Login successful','success');
