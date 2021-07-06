@@ -4,7 +4,7 @@
       <team-preview
         v-for="team in teams"
         :key="team.id"
-        :teamName="team.team_name"
+        :teamName="team.name"
         :teamLogo="team.logo"
       >
       </team-preview>

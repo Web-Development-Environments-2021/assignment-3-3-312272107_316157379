@@ -54,14 +54,11 @@ export default {
           return { players: this.favorites, enableAddToFavorites: false };
         case "favorite-matches":
           return {
-            matchesToDisplay: this.favorites,
+            matchesToDisplay: this.favorites.future_matches,
             enableAddToFavorites: false,
           };
         default:
-          return {
-            matchesToDisplay: this.favorites,
-            enableAddToFavorites: false,
-          };
+          return {};
       }
     },
     favoritesCategoryAsPlural() {
