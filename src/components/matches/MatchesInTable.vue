@@ -11,14 +11,14 @@
       <template #cell(index)="data">
         {{ data.index + 1 }}
       </template>
-      <template #cell(home_team)="data">
-        <router-link
+      <template #cell(home_team)="data" >
+        <router-link sortable:true
           :to="{ name: 'teamPage', params: { team_name: data.value } }"
           >{{ data.value }}</router-link
         >
       </template>
 
-      <template #cell(away_team)="data">
+      <template #cell(away_team)="data" >
         <router-link
           :to="{ name: 'teamPage', params: { team_name: data.value } }"
           >{{ data.value }}</router-link
@@ -120,16 +120,39 @@ export default {
       currentEventLog: [],
       matchesToDisplayAfterSplit: [],
       fields: [
-        "index",
-        "home_team",
-        "away_team",
-        "date",
-        "time",
-        "home_goals",
-        "away_goals",
-        "venue",
-        "event_log",
-        "addFavorite",
+        {
+          key:"index",
+        },
+        {
+          key:"home_team",
+          sortable: true
+        },
+        {
+          key:"away_team",
+          sortable: true
+        },
+        {
+          key:"date",
+          sortable: true
+        },
+        {
+          key:"time",
+        },
+        {
+          key:"home_goals",
+        },
+        {
+          key:"away_goals",
+        },
+        {
+          key:"venue",
+        },
+        {
+          key:"event_log",
+        },
+        {
+          key:"addFavorite",
+        },
       ],
     };
   },

@@ -8,6 +8,7 @@ let state = {
   leagueID: 271, //Superliga
   favoriteMatchesFresh: true,
   matchesInStageFresh: false,
+  matchesInLeagueFresh: false,
 };
 let actions = {
   login: (username) => {

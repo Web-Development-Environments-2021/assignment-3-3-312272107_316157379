@@ -33,6 +33,9 @@ import {
   ListGroupPlugin ,
   TablePlugin,
   ImagePlugin,
+  CalendarPlugin,
+  ModalPlugin,
+  TimePlugin,
 } from "bootstrap-vue";
 [
   FormGroupPlugin,
@@ -50,6 +53,9 @@ import {
   ListGroupPlugin,
   TablePlugin,
   ImagePlugin,
+  CalendarPlugin,
+  ModalPlugin,
+  TimePlugin,
 ].forEach((x) => Vue.use(x));
 Vue.use(Vuelidate);
 

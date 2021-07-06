@@ -8,6 +8,9 @@
         <b-nav-item :to="{ name: 'about' }">About</b-nav-item>
         <b-nav-item :to="{ name: 'search' }">Search</b-nav-item>
         <b-nav-item :to="{ name: 'stageMatches' }">Matches In Current Stage</b-nav-item>
+
+        <b-nav-item v-if="checkUnionRep" :to="{ name: 'LeagueManagePage' }">League Manage Page</b-nav-item>
+
         <b-nav-item v-if="$store.state.username" :to="{ name: 'favorites' }">Favorites</b-nav-item>
         <!-- <b-nav-item :to="{ name: 'teamPage' }">Team Page Test</b-nav-item> -->
         <b-nav-item disabled>hello {{usernameDisplay}}</b-nav-item>
@@ -42,8 +45,10 @@ export default {
     async Logout() {
       this.$store.actions.logout();
       await this.axios.get(
-        `${this.axios.defaults.baseURL}/logout`);
+        `${this.axios.defaults.baseURL}/logout`
+      );
       this.$store.actions.setProperty("roles","");
+
       this.$root.toast("Logout", "User logged out successfully", "success");
 
       this.$router.push("/").catch(() => {
@@ -54,6 +59,10 @@ export default {
   computed:{
      usernameDisplay(){  
        return this.$store.state.username ? this.$store.state.username : 'guest'; 
+      },
+      checkUnionRep(){
+
+        return this.$store.state.username && this.$store.state.roles && this.$store.state.roles.includes("union_representative");
       },
   }
 };
