@@ -10,52 +10,22 @@
         </b-form-select>
       </b-input-group-append>
 
-      <!-- FILTER OPTIONS  -->
-      <div v-show="searchCategory == 'player'">
-        <b-input-group-append>
-          <b-form-select v-model="filterBy" :options="filterOptions">
-          </b-form-select>
-        </b-input-group-append>
-
-        <!-- POSITION FILTER  -->
-        <b-input-group-append v-show="filterBy == 'position'">
-          <b-form-select
-            v-model="positionFilter"
-            :options="positionFilterOptions"
-            multiple
-            :select-size="4"
-          >
-          </b-form-select>
-        </b-input-group-append>
-
-        <!-- TEAM NAME FILTER  -->
-        <b-input-group-append v-show="filterBy == 'team_name'">
-          <b-form-select
-            v-model="teamNameFilter"
-            :options="teamNames"
-            multiple
-            :select-size="4"
-          >
-          </b-form-select>
-        </b-input-group-append>
-
-        <!-- SORTING -->
-        <b-input-group-append>
-          <b-form-select
-            v-model="sortBy"
-            :options="sortOptions"
-          ></b-form-select>
-        </b-input-group-append>
-      </div>
       <b-input-group-append>
         <b-button variant="success" @click="search()">Search</b-button>
       </b-input-group-append>
     </b-input-group>
 
+    <search-post-process
+      v-if="displayPostSearchOptions"
+      :searchResults="searchResults"
+      @postProcessComplete="updateSearchResults"
+    >
+    </search-post-process>
+
     <search-results
       v-if="searchResultsDisplayedCategory"
       :searchCategory="searchResultsDisplayedCategory"
-      :searchResults="searchResults"
+      :searchResults="alteredSearchResults"
     >
     </search-results>
   </div>
@@ -63,18 +33,19 @@
 
 <script>
 import searchResultsComp from "./SearchResults.vue";
-import teamNames from "../../assets/teamsNames";
+import searchPostProcess from "./SearchPostProcess.vue";
 
 export default {
   components: {
     "search-results": searchResultsComp,
+    "search-post-process": searchPostProcess,
   },
   data() {
     return {
       lastQuery: "",
       currentQuery: "",
-
       searchResults: [],
+      alteredSearchResults: [],
       searchCategory: null,
       searchResultsDisplayedCategory: "",
       searchOptions: [
@@ -82,35 +53,12 @@ export default {
         { value: "player", text: "Players" },
         { value: "team", text: "Teams" },
       ],
-
-      // filter
-      filterBy: null,
-      teamNames: [],
-      positionFilter: [1],
-      teamNameFilter: [""],
-      filterOptions: [
-        { value: null, text: "Filter by", disabled: true },
-        { value: null, text: "No filter" },
-        { value: "position", text: "Player Position" },
-        { value: "team_name", text: "Team Name" },
-      ],
-
-      positionFilterOptions: [
-        { value: null, text: "Choose a player position", disabled: true },
-        { value: 1, text: "1" },
-        { value: 2, text: "2" },
-        { value: 3, text: "3" },
-        { value: 4, text: "4" },
-      ],
-
-      sortBy: null,
-      sortOptions: [
-        { value: null, text: "Sort by", disabled: true },
-        { value: null, text: "No filter" },
-        { value: "full_name", text: "Player Name" },
-        { value: "team_name", text: "Team Name" },
-      ],
     };
+  },
+  computed: {
+    displayPostSearchOptions() {
+      return this.searchResults.length > 0 && this.searchCategory == "player";
+    },
   },
   methods: {
     async search() {
@@ -128,9 +76,9 @@ export default {
             `${this.axios.defaults.baseURL}/search/${this.searchCategory}/${this.currentQuery}`
           )
           .then((res) => res.data);
-        if(search_results.length == 0){
-          console.log('no search results');
-          throw '';
+        if (search_results.length == 0) {
+          console.log("no search results");
+          throw "";
         }
 
         if (this.searchCategory == "player" && this.filterBy != null) {
@@ -141,6 +89,7 @@ export default {
         }
 
         this.searchResults = search_results;
+        this.alteredSearchResults = search_results;
         this.lastQuery = this.currentQuery;
         this.searchResultsDisplayedCategory = this.searchCategory; // Change search results displayed
 
@@ -155,41 +104,15 @@ export default {
         this.$root.toast(
           "Matches In Stage",
           "Can't find results for query. Please try again.",
-          "warning" 
+          "warning"
         );
       }
     },
-    filterPlayers(players) {
-      if (this.filterBy == "position") {
-        return players.filter((player) =>
-          this.positionFilter.includes(player.player_position)
-        );
+    updateSearchResults(newSearchResults) {
+        this.alteredSearchResults = newSearchResults;
       }
-      return players.filter((player) =>
-        this.teamNames.includes(player.team_name)
-      );
-    },
-    sortPlayers(players) {
-      return players.sort(this.dynamicSort(this.sortBy));
-    },
-    dynamicSort(property) {
-      var sortOrder = 1;
-      if (property[0] === "-") {
-        sortOrder = -1; 
-        property = property.substr(1);
-      }
-      return function(a, b) {
-        /* next line works with strings and numbers,
-         * and you may want to customize it to your needs
-         */
-        var result =
-          a[property] < b[property] ? -1 : a[property] > b[property] ? 1 : 0;
-        return result * sortOrder;
-      };
-    },
   },
   mounted() {
-    this.teamNames.push(...teamNames);
     if (
       this.$store.actions.hasProperty("lastSearchResults") &&
       this.$store.actions.hasProperty("lastSearchQuery") &&
@@ -197,6 +120,7 @@ export default {
     ) {
       this.lastQuery = this.$store.state.lastSearchQuery;
       this.searchResults = this.$store.state.lastSearchResults;
+      this.alteredSearchResults = this.$store.state.lastSearchResults;
       this.searchResultsDisplayedCategory = this.$store.state.lastSearchCategory;
     }
   },
