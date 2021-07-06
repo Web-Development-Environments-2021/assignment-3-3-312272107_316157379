@@ -15,6 +15,7 @@
       </b-input-group-append>
     </b-input-group>
 
+    <!-- filter and sort -->
     <search-post-process
       v-if="displayPostSearchOptions"
       :searchResults="searchResults"
@@ -22,6 +23,7 @@
     >
     </search-post-process>
 
+    <!-- search results display -->
     <search-results
       v-if="searchResultsDisplayedCategory"
       :searchCategory="searchResultsDisplayedCategory"
@@ -79,13 +81,6 @@ export default {
         if (search_results.length == 0) {
           console.log("no search results");
           throw "";
-        }
-
-        if (this.searchCategory == "player" && this.filterBy != null) {
-          search_results = this.filterPlayers(search_results);
-        }
-        if (this.searchCategory == "player" && this.sortBy != null) {
-          search_results = this.sortPlayers(search_results);
         }
 
         this.searchResults = search_results;
