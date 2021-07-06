@@ -32,6 +32,7 @@
           :text="data.item.home_team_goals.toString()"
           class="m-2"
           variant="primary"
+          :disabled="notUnionRep"
         >
           <b-dropdown-item-button
             v-for="index in 5"
@@ -52,12 +53,14 @@
           size="sm"
           :text="data.item.away_team_goals.toString()"
           class="m-2"
-          variant="primary"
+          variant="primary" 
+          :disabled="notUnionRep"
         >
           <b-dropdown-item-button
             v-for="index in 5"
             :key="index"
             :value="index - 1"
+            :disabled="notUnionRep"
             @click="
               updateScore(data.item, data.item.away_team_goals, index-1, false)
             "
@@ -159,6 +162,10 @@ export default {
     disableFavorites() {
       return !this.enableAddToFavorites || !this.$store.state.username;
     },
+    notUnionRep(){
+      console.log(this.$store.state.roles)
+      return !this.$store.state.username || !this.$store.state.roles || !this.$store.state.roles.includes("union_representative");
+    }
   },
   methods: {
     splitDateTime() {

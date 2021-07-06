@@ -92,15 +92,16 @@ export default {
     },
     async Login() {
       try {
-        const response = await this.axios.post(
+        const user_roles = await this.axios.post(
            `${this.axios.defaults.baseURL}/login`,
           {
             username: this.form.username,
             password: this.form.password
           }
-        ).then( (res) => res.data);
+        ).then( (res) => res.data.roles.map((roleObj) => roleObj.user_role));
          this.$store.actions.login(this.form.username);
-         this.$store.actions.setProperty("roles",response);
+
+         this.$store.actions.setProperty("roles",user_roles);
 
          this.$emit('loginSuccessful')
          if(this.$router.currentRoute.fullPath != "/"){
