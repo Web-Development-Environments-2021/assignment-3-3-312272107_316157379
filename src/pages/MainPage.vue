@@ -37,7 +37,10 @@ export default {
   methods: {
     async getFavoriteMatches() {
       let allFavoriteMatches = await this.getFavorites('match');
+      if(allFavoriteMatches.future_matches){
       this.threeFavoriteMatches = allFavoriteMatches.future_matches.slice(0, 3);
+
+      }
     },
   },
   async created() {
