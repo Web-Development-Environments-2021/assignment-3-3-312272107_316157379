@@ -50,13 +50,12 @@ export default {
           }
         }
       } catch (error) {
-        console.log(error.message);
         this.$root.toast("Matches In League", error.message, "danger");
       }
     },
     async addMatch(matchDetails){
       try{
-        let addMatchMessage = await this.axios
+        await this.axios
             .post(`${this.axios.defaults.baseURL}/users/union_rep/matches`,
           {
             date_time : matchDetails.date,
@@ -64,9 +63,10 @@ export default {
             away_team_name  : matchDetails.away_team_name,
             stage : this.currentStage,
           });
-          this.$root.toast("add match sucsses");
+         this.$store.actions.setProperty('matchesInLeagueFresh',false);
+         this.$store.actions.setProperty('matchesInStageFresh',false);
+         this.$root.toast("Add Match", 'Match was added succesfully', "success");
           } catch (error) {
-        console.log(error.message );
         this.$root.toast("add match", error.message, "danger");
       }
     }
