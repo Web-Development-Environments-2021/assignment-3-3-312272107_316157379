@@ -19,12 +19,12 @@
             >Player Position: {{ playerPosition }}</b-list-group-item
           >
           <b-button
-            :disabled=" playerInFavorites"
+            :disabled=" localInFavorites"
             @click="addPlayerToFavorites()"
             size="sm"
             :variant="favoritesVariant"
           >
-            {{ playerInFavorites ? "Can Not Be Added" : "Add" }} To Favorites</b-button
+            {{ localInFavorites ? "Can Not Be Added" : "Add" }} To Favorites</b-button
           >
         </b-list-group>
       </b-card-body>
