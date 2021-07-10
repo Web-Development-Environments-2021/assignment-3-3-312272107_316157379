@@ -143,11 +143,9 @@ Vue.mixin({
             favorite_id: categoryID,
           }
         })
-        console.log('before');
         if (categoryName == "match") {
           this.$store.actions.notProp('favoriteMatchesFresh');
         }
-        console.log(this.$store.state.favoriteMatchesFresh);
         this.$root.toast(
           "Add favorite",
           `New ${categoryName} has been added to your favorites.`,
