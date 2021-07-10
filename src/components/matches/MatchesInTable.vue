@@ -192,6 +192,9 @@ export default {
   methods: {
     splitDateTime() {
       let tmpMatches = this.matchesToDisplay;
+      if(typeof tmpMatches[0] === 'undefined'){
+        return;
+      }
       this.matchesToDisplayAfterSplit = tmpMatches.map((match) => {
         let date_time_split = match.match_date_time.split("T");
         match.date = date_time_split[0];

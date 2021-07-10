@@ -21,16 +21,8 @@
           <b-nav-item :to="{ name: 'login' }">Login</b-nav-item>
           <b-nav-item :to="{ name: 'register' }">Register</b-nav-item>
         </b-navbar-nav>
-        <b-navbar-nav class="ml-auto" v-else>
-        <b-nav-item-dropdown right>
-          <template #button-content>
-            {{usernameDisplay}}
-          </template>
-          <b-dropdown-item href="#">My Matches</b-dropdown-item>
-          <!-- <b-dropdown-item href="#">Favorite Players</b-dropdown-item> -->
-          <!-- <b-dropdown-item href="#">Favorite Teams</b-dropdown-item> -->
-          <b-dropdown-item @click="Logout">Log Out</b-dropdown-item>
-        </b-nav-item-dropdown>
+        <b-navbar-nav class="ml-auto" v-else right>
+          <b-nav-item @click="Logout">Log Out</b-nav-item>
         </b-navbar-nav>
       </b-collapse>
     </b-navbar>
