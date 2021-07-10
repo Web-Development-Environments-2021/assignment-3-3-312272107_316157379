@@ -138,11 +138,10 @@ Vue.mixin({
         await this.axios({
           method: 'post',
           url: `${this.axios.defaults.baseURL}/users/favorites/${categoryName}`,
-          headers: {}, 
           data: {
             favorite_id: categoryID,
           }
-        })
+        });
         if (categoryName == "match") {
           this.$store.actions.notProp('favoriteMatchesFresh');
         }
@@ -151,8 +150,8 @@ Vue.mixin({
           `New ${categoryName} has been added to your favorites.`,
           "success"
         );
-      } catch (error) {
-        this.$root.toast("Add Favorites", "Already in favorites", "danger");
+      } catch(error)  {
+        this.$root.toast("Add Favorites", "Already in favorites", "danger");  
       }
     },
 
