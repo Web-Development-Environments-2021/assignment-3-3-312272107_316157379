@@ -123,7 +123,7 @@ Vue.mixin({
             )
             .then((favorites) => favorites.data);
           this.$store.actions.setProperty(favoritesPropName, favorites);
-          this.$store.actions.setProperty('favoriteMatchesFresh',true);
+          this.$store.actions.setProperty(favoritesPropName + 'Fresh',true);
           return favorites;
         }
       } catch (error) {
@@ -136,6 +136,9 @@ Vue.mixin({
 
     async addToFavorites(categoryID, categoryName) {
       try {
+        const favoritesFreshness =
+        "favorite" + Pluralize(this.$root.capitalize(categoryName), 4) + 'Fresh';
+
         await this.axios({
           method: 'post',
           url: `${this.axios.defaults.baseURL}/users/favorites/${categoryName}`,
@@ -144,7 +147,7 @@ Vue.mixin({
           }
         });
         if (categoryName == "match") {
-          this.$store.actions.notProp('favoriteMatchesFresh');
+          this.$store.actions.setProperty(favoritesFreshness, false);
         }
         this.$root.toast(
           "Add favorite",
