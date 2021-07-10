@@ -186,7 +186,6 @@ export default {
       return !this.enableAddToFavorites || !this.$store.state.username;
     },
     notUnionRep(){
-      console.log(this.$store.state.roles)
       return !this.$store.state.username || !this.$store.state.roles || !this.$store.state.roles.includes("union_representative");
     }
   },
