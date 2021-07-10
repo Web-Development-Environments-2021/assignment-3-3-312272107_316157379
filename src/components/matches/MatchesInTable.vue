@@ -171,7 +171,7 @@ export default {
     matchesToDisplay: {
       immediate: true,
       handler() {
-        if (this.isObjectEmpty(this.matchesToDisplay[0])) {
+        if (this.matchesToDisplay.length == 0 ||  this.isObjectEmpty(this.matchesToDisplay[0])) {
           return;
         }
         this.splitDateTime();

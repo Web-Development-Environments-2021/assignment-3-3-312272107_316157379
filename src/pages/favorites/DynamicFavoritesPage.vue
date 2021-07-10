@@ -53,13 +53,21 @@ export default {
         case "favorite-players":
           return { players: this.favorites, enableAddToFavorites: false };
         case "favorite-matches":
-          return {
-            matchesToDisplay: this.favorites.future_matches,
-            enableAddToFavorites: false,
-          };
+          return this.futureMatchesExist
+            ? {
+                matchesToDisplay: this.favorites.future_matches,
+                enableAddToFavorites: false,
+              }
+            : {
+              matchesToDisplay:[],
+              enableAddToFavorites: false,
+            };
         default:
           return {};
       }
+    },
+    futureMatchesExist(){
+      return this.favorites.future_matches && this.favorites.future_matches.length > 0;
     },
     favoritesCategoryAsPlural() {
       return Pluralize(this.$root.capitalize(this.favoritesCategory));

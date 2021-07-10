@@ -271,6 +271,7 @@ export default {
             profile_pic: this.form.profile_pic,
           }
         );
+        this.$root.toast("New User", "Registration successful", "success");  
         this.$router.push("/login");
       } catch (err) {
         console.log(err.message);

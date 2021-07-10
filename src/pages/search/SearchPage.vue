@@ -79,7 +79,6 @@ export default {
           )
           .then((res) => res.data);
         if (search_results.length == 0) {
-          console.log("no search results");
           throw "";
         }
 
@@ -95,7 +94,6 @@ export default {
           this.searchCategory
         );
       } catch (error) {
-        console.log(error.message);
         this.$root.toast(
           "Matches In Stage",
           "Can't find results for query. Please try again.",

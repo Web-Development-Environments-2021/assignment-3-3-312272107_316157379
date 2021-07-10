@@ -123,6 +123,7 @@ Vue.mixin({
             )
             .then((favorites) => favorites.data);
           this.$store.actions.setProperty(favoritesPropName, favorites);
+          this.$store.actions.setProperty('favoriteMatchesFresh',true);
           return favorites;
         }
       } catch (error) {
